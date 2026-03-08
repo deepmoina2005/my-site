@@ -27,6 +27,7 @@ connectCloudinary();
 const corsOptions = {
   origin: [
     "http://localhost:5173", // admin
+    "https://my-site-eu3d.vercel.app", // admin
     "http://localhost:5174", // public site
     "https://my-site-eight-gules.vercel.app", // public site
   ],
