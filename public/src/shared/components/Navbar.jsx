@@ -10,7 +10,7 @@ export default function Navbar() {
     const [openMobileMenu, setOpenMobileMenu] = useState(false);
     const { theme } = useThemeContext();
     const { general } = useSettings();
-    const logoSrc = general.siteLogoUrl || (theme === "dark" ? "/assets/logo-light.svg" : "/assets/logo-dark.svg");
+    const logoSrc = general.siteLogoUrl || (theme === "dark" ? "/assets/light-logo.png" : "/assets/dark-logo.png");
     const siteName = general.siteName || "Portfolio";
 
     useEffect(() => {
@@ -40,9 +40,6 @@ export default function Navbar() {
                         {link.name}
                     </Link>
                 ))}
-                <button>
-                    Sign in
-                </button>
                 <button className="aspect-square size-10 p-1 items-center justify-center bg-purple-600 hover:bg-purple-700 transition text-white rounded-md flex" onClick={() => setOpenMobileMenu(false)}>
                     <XIcon />
                 </button>

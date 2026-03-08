@@ -7,8 +7,6 @@ const settingsSchema = new mongoose.Schema(
       siteName: { type: String, default: "My Portfolio" },
       siteTagline: { type: String, default: "" },
       siteDescription: { type: String, default: "" },
-      siteLogoUrl: { type: String, default: "" },
-      faviconUrl: { type: String, default: "" },
       adminEmail: { type: String, default: "" },
     },
     seo: {

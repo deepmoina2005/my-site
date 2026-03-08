@@ -12,6 +12,7 @@ import BooksPage from "@/features/book/pages/BooksPage"
 import ProductsPage from "@/features/product/pages/ProductsPage"
 import ServicesPage from "@/features/service/pages/ServicesPage"
 import CertificatesPage from "@/features/certificate/pages/CertificatesPage"
+import CertificateDetail from "@/features/certificate/pages/CertificateDetail"
 import NotesPage from "@/features/notes/pages/NotesPage"
 import ContactPage from "@/features/contact/pages/ContactPage"
 
@@ -39,6 +40,7 @@ export default function App() {
                 <Route path="/products" element={<ProductsPage />} />
                 <Route path="/services" element={<ServicesPage />} />
                 <Route path="/certificates" element={<CertificatesPage />} />
+                <Route path="/certificates/:id" element={<CertificateDetail />} />
                 <Route path="/notes" element={<NotesPage />} />
                 <Route path="/contact" element={<ContactPage />} />
             </Routes>

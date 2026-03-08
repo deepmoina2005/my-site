@@ -69,8 +69,6 @@ export const uploadSettingFile = async (req, res) => {
 
     // Map field to the nested path
     const fieldMap = {
-      siteLogoUrl:  "general.siteLogoUrl",
-      faviconUrl:   "general.faviconUrl",
       ogImageUrl:   "seo.ogImageUrl",
       heroImageUrl: "homepage.heroImageUrl",
       resumeUrl:    "homepage.resumeUrl",

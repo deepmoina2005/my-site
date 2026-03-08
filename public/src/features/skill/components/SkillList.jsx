@@ -8,13 +8,13 @@ const SkillList = () => {
     if (loading) return <div className="text-center py-10">Loading skills...</div>;
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-10 max-w-6xl mx-auto">
             {skills.map((skill, index) => (
                 <div key={skill._id || index} className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/30 hover:border-purple-500/50 transition-all group flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
                             {skill.icon ? (
-                                <img src={skill.icon} alt={skill.name} className="size-10 object-contain grayscale group-hover:grayscale-0 transition-all" />
+                                <img src={skill.icon} alt={skill.name} className="size-10 object-contain transition-all" />
                             ) : (
                                 <div className="size-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">?</div>
                             )}

@@ -36,7 +36,7 @@ export default function Footer() {
                             <img className="h-9 w-auto shrink-0" src={siteLogoUrl} alt={siteName} />
                         ) : (
                             <img className="h-9 w-auto shrink-0"
-                                src={theme === "dark" ? "/assets/logo-light.svg" : "/assets/logo-dark.svg"}
+                                src={theme === "dark" ? "/assets/light-logo.png" : "/assets/dark-logo.png"}
                                 alt={siteName} />
                         )}
                     </Link>
