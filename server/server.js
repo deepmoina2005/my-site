@@ -28,6 +28,7 @@ const corsOptions = {
   origin: [
     "http://localhost:5173", // admin
     "http://localhost:5174", // public site
+    "https://my-site-eight-gules.vercel.app", // public site
   ],
   credentials: true,
 };
