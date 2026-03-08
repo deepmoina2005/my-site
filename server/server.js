@@ -21,7 +21,7 @@ import settingsRouter from "./routes/settingsRoutes.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
-await connectDB();
+connectDB();
 connectCloudinary();
 // CORS options
 const corsOptions = {
