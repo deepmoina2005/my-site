@@ -20,9 +20,9 @@ const BooksPage = () => {
             <Container>
                 <SectionTitle text1="LIBRARY" text2="Books & Reading" text3="My published books, recommended reads, and technical guides." />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
                     {books.map((book) => (
-                        <div key={book._id} className="group flex flex-col h-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-500">
+                        <div key={book._id} className="group flex flex-col h-[550px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-500">
                             <div className="aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-800 relative shadow-inner">
                                 {book.thumbnail ? (
                                     <img src={book.thumbnail} alt={book.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
