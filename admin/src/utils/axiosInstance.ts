@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://my-site-zcyn.vercel.app/api",
+  baseURL: "https://my-site-1bjq.vercel.app/api",
 });
 
 // const axiosInstance = axios.create({
