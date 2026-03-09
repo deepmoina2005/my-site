@@ -4,7 +4,6 @@ import { useThemeContext } from "@/context/ThemeContext";
 import { navLinks } from "@/data/navLinks";
 import { Link, useLocation } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
-import { useSettings } from "@/shared/hooks/useSettings";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchServices } from "@/features/service/serviceSlice";
 
@@ -18,9 +17,8 @@ export default function Navbar() {
     const [mobileExpanded, setMobileExpanded] = useState(null);
 
     const { theme } = useThemeContext();
-    const { general } = useSettings();
-    const logoSrc = general.siteLogoUrl || (theme === "dark" ? "/assets/light-logo.png" : "/assets/dark-logo.png");
-    const siteName = general.siteName || "Portfolio";
+    const logoSrc = theme === "dark" ? "/assets/light-logo.png" : "/assets/dark-logo.png";
+    const siteName = "Deepmoina";
 
     useEffect(() => {
         dispatch(fetchServices());

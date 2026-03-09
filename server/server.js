@@ -16,7 +16,6 @@ import certificateRouter from "./routes/certificateRoutes.js";
 import educationRouter from "./routes/educationRoutes.js";
 import serviceRouter from "./routes/serviceRoutes.js";
 import contactRouter from "./routes/contactRoutes.js";
-import settingsRouter from "./routes/settingsRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -53,7 +52,6 @@ app.use("/api/certificates", certificateRouter);
 app.use("/api/educations", educationRouter);
 app.use("/api/services", serviceRouter);
 app.use("/api/contacts", contactRouter);
-app.use("/api/settings", settingsRouter);
 
 // Global Error Handling
 app.use((err, req, res, next) => {

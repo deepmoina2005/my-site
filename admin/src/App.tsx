@@ -38,7 +38,6 @@ import ViewNoteDetails from "@/features/notes/pages/ViewNoteDetails";
 import ViewBooksDetails from "@/features/book/pages/ViewBooksDetails";
 import ViewProductDetails from "@/features/product/pages/ViewProductDetails";
 import ViewExperienceDetails from "@/features/experience/pages/ViewExprienceDetails";
-import SettingsPage from "@/features/settings/pages/SettingsPage";
 
 function App() {
   return (
@@ -103,7 +102,6 @@ function App() {
             <Route path="services/:id/edit" element={<EditService />} />
 
             <Route path="contact" element={<AllContacts />} />
-            <Route path="settings" element={<SettingsPage />} />
           </Route>
         </Routes>
       </div>

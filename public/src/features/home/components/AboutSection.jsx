@@ -1,16 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { TerminalSquare, Github, Lightbulb, Zap } from "lucide-react";
-import { useSettings } from "@/shared/hooks/useSettings";
 import Container from "@/shared/components/Container";
 import SectionTitle from "@/shared/components/SectionTitle";
 
 const AboutSection = () => {
-  const { homepage, general } = useSettings();
   const { projects } = useSelector((state) => state.projects);
-
-  const name = homepage.heroTitle || general.siteName || "Deepmoina Boruah";
-  const profilePic = homepage.heroImageUrl || "/assets/hero.jpg";
+  const name = "Deepmoina Boruah";
+  const profilePic = "/assets/hero.png";
 
   const currentYear = new Date().getFullYear();
   const startYear = 2021;
@@ -35,14 +32,14 @@ const AboutSection = () => {
     },
   ];
 
-const stats = [
-  { label: "Years Experience", value: `+${yearsOfExp}` },
-  { label: "Projects Completed", value: `+${projects?.length || 10}` },
-  { label: "Certificates Earned", value: "+12" },
-  { label: "Technologies Mastered", value: "+15" },
-  { label: "GitHub Repositories", value: "+30" },
-  { label: "Happy Clients", value: "+8" },
-];
+  const stats = [
+    { label: "Years Experience", value: `+${yearsOfExp}` },
+    { label: "Projects Completed", value: `+${projects?.length || 10}` },
+    { label: "Certificates Earned", value: "+12" },
+    { label: "Technologies Mastered", value: "+15" },
+    { label: "GitHub Repositories", value: "+30" },
+    { label: "Happy Clients", value: "+8" },
+  ];
 
   return (
     <section

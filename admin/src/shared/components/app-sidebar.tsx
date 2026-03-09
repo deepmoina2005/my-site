@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { SquareTerminal, BookOpen, FileText, Folder, FileArchive, User, Plus, List, Home, Settings2, Toolbox, Briefcase, GraduationCap, Award, Layers } from "lucide-react"
+import { SquareTerminal, BookOpen, FileText, Folder, FileArchive, User, Plus, List, Home, Toolbox, Briefcase, GraduationCap, Award, Layers } from "lucide-react"
 
 import { NavMain } from "@/shared/components/nav-main"
 import { NavUser } from "@/shared/components/nav-user"
@@ -136,12 +136,6 @@ const data = {
       url: "/contact",
       icon: User,
       isActive: false,
-    },
-    {
-      title: "Settings",
-      icon: Settings2,
-      isActive: false,
-      url: "/settings",
     },
   ]
 

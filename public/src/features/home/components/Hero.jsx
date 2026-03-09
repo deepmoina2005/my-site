@@ -2,13 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ArrowRight, Download, Code, BookOpen, Layers, Award } from "lucide-react";
-import { useSettings } from "@/shared/hooks/useSettings";
 
 const DEFAULTS = {
     name: "Deepmoina Boruah",
     position: "Full Stack Developer",
     description: "Building modern web applications with scalable backend systems and high-performance UI experiences. Specializing in React, Node.js, and Cloud architectures.",
-    profilePic: "/assets/hero.jpg",
+    profilePic: "/assets/hero.png",
     ctaText: "Hire Me",
     ctaLink: "/contact",
 };
@@ -18,16 +17,13 @@ const Hero = () => {
     const { blogs } = useSelector((state) => state.blogs);
     const { skills } = useSelector((state) => state.skills);
     const { certificates } = useSelector((state) => state.certificates);
-    const { homepage, general } = useSettings();
-
-    // Live settings with graceful fallbacks
-    const heroTitle = homepage.heroTitle || (general.siteName ? `Hi, I'm ${general.siteName}` : `Hi, I am ${DEFAULTS.name}`);
-    const heroSubtitle = homepage.heroSubtitle || DEFAULTS.position;
-    const heroDescription = homepage.heroDescription || DEFAULTS.description;
-    const heroImageUrl = homepage.heroImageUrl || DEFAULTS.profilePic;
-    const resumeUrl = homepage.resumeUrl || null;
-    const ctaText = homepage.ctaText || DEFAULTS.ctaText;
-    const ctaLink = homepage.ctaLink || DEFAULTS.ctaLink;
+    const heroTitle = `Hi, I'm ${DEFAULTS.name}`;
+    const heroSubtitle = DEFAULTS.position;
+    const heroDescription = DEFAULTS.description;
+    const heroImageUrl = DEFAULTS.profilePic;
+    const resumeUrl = null;
+    const ctaText = DEFAULTS.ctaText;
+    const ctaLink = DEFAULTS.ctaLink;
 
     const stats = [
         { label: "Projects", count: projects?.length || 0, icon: <Layers className="text-blue-500" size={20} /> },

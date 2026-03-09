@@ -17,14 +17,16 @@ const SocialIcon = ({ href, icon: Icon, label }) => {
 
 export default function Footer() {
     const { theme } = useThemeContext();
-    const settings = useSelector((state) => state.settings.settings);
-
-    const siteName = settings?.general?.siteName || "Portfolio CMS";
-    const siteDescription = settings?.general?.siteDescription || "Dedicated to building high-quality web applications and sharing knowledge through projects and blogs.";
-    const contactEmail = settings?.contact?.contactEmail || "";
-    const address = settings?.contact?.address || "";
-    const siteLogoUrl = settings?.general?.siteLogoUrl || "";
-    const social = settings?.social || {};
+    const siteName = "Deepmoina";
+    const siteDescription = "Dedicated to building high-quality web applications and sharing knowledge through projects and blogs.";
+    const contactEmail = "deepmoinaboruah7@gmail.com";
+    const address = "Assam, India";
+    const siteLogoUrl = "";
+    const social = {
+        github: "https://github.com/deepmoina2005",
+        linkedin: "https://linkedin.com/in/deepmoina",
+        twitter: "https://twitter.com/deepmoina",
+    };
 
     return (
         <footer className="relative px-6 md:px-16 lg:px-24 xl:px-32 mt-40 w-full dark:text-slate-50">

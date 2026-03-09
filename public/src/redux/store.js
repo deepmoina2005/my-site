@@ -10,7 +10,6 @@ import categoryReducer from '@/features/category/categorySlice';
 import experienceReducer from '@/features/experience/experienceSlice';
 import skillReducer from '@/features/skill/skillSlice';
 import noteReducer from '@/features/notes/noteSlice';
-import settingsReducer from '@/features/settings/settingsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +24,5 @@ export const store = configureStore({
     experiences: experienceReducer,
     skills: skillReducer,
     notes: noteReducer,
-    settings: settingsReducer,
   },
 });

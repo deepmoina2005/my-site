@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { fetchSettings } from "@/features/settings/settingsSlice"
 import Home from "@/features/home/pages/Home"
 import About from "@/features/about/pages/About"
 import ProjectsPage from "@/features/project/pages/ProjectsPage"
@@ -24,7 +23,6 @@ import { Toaster } from "react-hot-toast"
 
 export default function App() {
     const dispatch = useDispatch()
-    useEffect(() => { dispatch(fetchSettings()) }, [dispatch])
     return (
         <>
             <Toaster position="top-center" reverseOrder={false} />

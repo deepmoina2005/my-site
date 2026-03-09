@@ -13,7 +13,6 @@ import educationReducer from "@/features/education/educationSlice";
 import serviceReducer from "@/features/service/serviceSlice";
 import contactsReducer from "@/features/contact/contactSlice";
 import dashboardReducer from "@/features/dashboard/dashboardSlice";
-import settingsReducer from "@/features/settings/settingsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -31,7 +30,6 @@ export const store = configureStore({
     services: serviceReducer,
     contacts: contactsReducer,
     dashboard: dashboardReducer,
-    settings: settingsReducer,
   },
 });
 
