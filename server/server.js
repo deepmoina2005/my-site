@@ -59,8 +59,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Something went wrong!" });
 });
 
-if (process.env.NODE_ENV !== "production") {
-  app.listen(port, () => console.log(`Server started on PORT: ${port}`));
-}
+app.listen(port, () => console.log(`Server started on PORT: ${port}`));
 
 export default app;

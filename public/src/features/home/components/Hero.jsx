@@ -42,7 +42,7 @@ const Hero = () => {
             id="home"
             className="w-full pt-16 md:pt-[12vh] min-h-screen bg-slate-50 dark:bg-[#0f0715] flex flex-col justify-center overflow-hidden transition-colors duration-300"
         >
-            <div className="w-11/12 max-w-6xl mx-auto py-20">
+            <div className="w-full px-6 md:w-11/12 max-w-6xl mx-auto py-20">
                 <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 items-center gap-12 md:gap-16">
 
                     {/* Text Content */}
@@ -114,7 +114,7 @@ const Hero = () => {
                                 onError={(e) => { e.target.src = DEFAULTS.profilePic; }}
                             />
                         </div>
-                        <div className="absolute -top-6 -right-6 md:-top-10 md:-right-10 size-16 bg-blue-700 rounded-2xl flex items-center justify-center text-white shadow-2xl rotate-12 group-hover:rotate-0 transition-all duration-500 z-10 scale-75 md:scale-100">
+                        <div className="absolute -top-4 -right-2 md:-top-10 md:-right-10 size-16 bg-blue-700 rounded-2xl flex items-center justify-center text-white shadow-2xl rotate-12 group-hover:rotate-0 transition-all duration-500 z-10 scale-75 md:scale-100">
                             <Code size={32} />
                         </div>
                     </div>
