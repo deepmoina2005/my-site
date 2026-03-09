@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
+import { Link } from "react-router-dom"
 
 import Container from "@/shared/components/Container"
 import SectionTitle from "@/shared/components/SectionTitle"
@@ -57,7 +58,44 @@ export default function Home() {
                         text3="The technologies and tools I use to bring ideas to life."
                     />
                     <div className="mt-10">
-                        <SkillList />
+                        <SkillList limit={8} />
+                    </div>
+                    <div className="mt-12 text-center">
+                        <Link
+                            to="/skills"
+                            className="inline-flex items-center gap-2 px-8 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-purple-500/50 hover:-translate-y-1 transition-all duration-300 shadow-sm"
+                        >
+                            View All Skills
+                            <svg className="w-4 h-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </Link>
+                    </div>
+                </Container>
+            </section>
+
+            {/* CERTIFICATES */}
+            <section className="py-20 bg-slate-50 dark:bg-slate-900/50">
+                <Container>
+                    <SectionTitle
+                        text1="ACHIEVEMENTS"
+                        text2="Certificates"
+                        text3="Professional certifications and learning milestones."
+                    />
+                    <div className="mt-10">
+                        <CertificateList limit={6} />
+                    </div>
+                    <div className="mt-12 text-center">
+                        <Link
+                            to="/certificates"
+                            className="inline-flex items-center gap-2 px-8 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-purple-500/50 hover:-translate-y-1 transition-all duration-300 shadow-sm"
+                        >
+                            View All Certificates
+                            <svg className="w-4 h-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="ArrowRight" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </Link>
                     </div>
                 </Container>
             </section>
@@ -74,19 +112,7 @@ export default function Home() {
                 </Container>
             </section>
 
-            {/* CERTIFICATES */}
-            <section className="py-20 bg-slate-50 dark:bg-slate-900/50">
-                <Container>
-                    <SectionTitle
-                        text1="ACHIEVEMENTS"
-                        text2="Certificates"
-                        text3="Professional certifications and learning milestones."
-                    />
-                    <div className="mt-10">
-                        <CertificateList />
-                    </div>
-                </Container>
-            </section>
+
 
         </>
     )

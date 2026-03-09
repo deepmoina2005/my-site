@@ -3,8 +3,13 @@ import { useSelector } from "react-redux";
 import { ExternalLink, Calendar, Award, FileText, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const CertificateList = () => {
-  const { certificates, loading } = useSelector((state) => state.certificates);
+const CertificateList = ({ limit, data, loading: propLoading }) => {
+  const { certificates: reduxCertificates, loading: reduxLoading } = useSelector((state) => state.certificates);
+
+  const certificates = data || reduxCertificates;
+  const loading = propLoading !== undefined ? propLoading : reduxLoading;
+
+  const displayedCertificates = limit ? certificates.slice(0, limit) : certificates;
 
   if (loading)
     return (
@@ -16,7 +21,7 @@ const CertificateList = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
 
-      {certificates.map((cert, index) => (
+      {displayedCertificates.map((cert, index) => (
         <Link
           to={`/certificates/${cert._id}`}
           key={cert._id || index}

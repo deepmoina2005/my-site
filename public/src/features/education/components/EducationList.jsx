@@ -18,49 +18,58 @@ const EducationList = () => {
                 <div key={edu._id || index} className="p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-2xl hover:border-purple-500/50 transition-all duration-500 flex flex-col group">
                     <div className="flex items-start justify-between mb-6">
                         {edu.logo ? (
-                            <img src={edu.logo} alt={edu.institution} className="size-14 object-contain rounded-xl grayscale group-hover:grayscale-0 transition-all" />
+                            <img src={edu.logo} alt={edu.institution} className="size-16 object-contain rounded-xl grayscale group-hover:grayscale-0 transition-all" />
                         ) : (
-                            <div className="size-14 rounded-2xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 border border-purple-100 dark:border-purple-800/50 group-hover:scale-110 transition-transform">
-                                <GraduationCap size={28} />
+                            <div className="size-16 rounded-2xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 border border-purple-100 dark:border-purple-800/50 group-hover:scale-110 transition-transform">
+                                <GraduationCap size={32} />
                             </div>
                         )}
-                        <span className="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-500 shadow-sm">
-                            {formatDate(edu.startDate)} — {edu.endDate ? formatDate(edu.endDate) : 'Present'}
-                        </span>
+                        <div className="flex flex-col items-end gap-2">
+                            <span className="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-500 shadow-sm border border-slate-200 dark:border-slate-700">
+                                {formatDate(edu.startDate)} — {edu.endDate ? formatDate(edu.endDate) : 'Present'}
+                            </span>
+                            {edu.grade && (
+                                <span className="text-[10px] font-bold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/30 px-2 py-0.5 rounded border border-purple-100 dark:border-purple-800/50">
+                                    Grade: {edu.grade}
+                                </span>
+                            )}
+                        </div>
                     </div>
 
-                    <h3 className="text-2xl font-black mb-1 uppercase tracking-tight group-hover:text-purple-600 transition-colors leading-tight">{edu.degree}</h3>
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-slate-400 mb-4 uppercase tracking-widest">
-                        <School size={14} className="text-purple-500" /> {edu.institution}
+                    <h3 className="text-xl font-black mb-1 uppercase tracking-tight group-hover:text-purple-600 transition-colors leading-tight">
+                        {edu.institution}
+                    </h3>
+                    <div className="flex flex-col gap-1 mb-4">
+                        <div className="flex items-center gap-1.5 text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
+                            <GraduationCap size={16} className="text-purple-500" /> {edu.degree}
+                        </div>
+                        {edu.fieldOfStudy && (
+                            <div className="text-xs font-semibold text-slate-400 uppercase tracking-widest pl-5">
+                                {edu.fieldOfStudy}
+                            </div>
+                        )}
                     </div>
 
-                    <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">
-                        {edu.location && (
-                            <div className="flex items-center gap-1.5">
-                                <MapPin size={14} className="text-purple-500" /> {edu.location}
-                            </div>
-                        )}
-                        {edu.workMode && (
-                            <div className="flex items-center gap-1.5">
-                                <Globe size={14} className="text-purple-500" /> {edu.workMode}
-                            </div>
-                        )}
-                        {edu.category && (
-                            <div className="flex items-center gap-1.5">
-                                <Building2 size={14} className="text-purple-500" /> {edu.category}
-                            </div>
-                        )}
-                    </div>
+                    {edu.activities && (
+                        <div className="mb-4">
+                            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-1 flex items-center gap-1">
+                                <Building2 size={12} /> Activities & Societies
+                            </h4>
+                            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                                {edu.activities}
+                            </p>
+                        </div>
+                    )}
 
                     <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed italic border-l-2 border-purple-500/20 pl-4 py-1 mb-6">
                         {edu.description}
                     </p>
 
-                    {edu.tags?.length > 0 && (
+                    {edu.skills?.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 pt-6 border-t border-slate-50 dark:border-slate-800 mt-auto">
-                            {edu.tags.map(tag => (
-                                <span key={tag} className="flex items-center gap-1 px-2 py-0.5 bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-md text-[9px] font-bold uppercase tracking-widest border border-slate-100 dark:border-slate-800">
-                                    <Tag size={10} /> {tag}
+                            {edu.skills.map(skill => (
+                                <span key={skill} className="flex items-center gap-1 px-2 py-0.5 bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-md text-[9px] font-bold uppercase tracking-widest border border-slate-100 dark:border-slate-800">
+                                    <Tag size={10} /> {skill}
                                 </span>
                             ))}
                         </div>

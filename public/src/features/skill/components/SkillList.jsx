@@ -2,14 +2,19 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { ExternalLink, Tag } from 'lucide-react';
 
-const SkillList = () => {
-    const { skills, loading } = useSelector((state) => state.skills);
+const SkillList = ({ limit, data, loading: propLoading }) => {
+    const { skills: reduxSkills, loading: reduxLoading } = useSelector((state) => state.skills);
+
+    const skills = data || reduxSkills;
+    const loading = propLoading !== undefined ? propLoading : reduxLoading;
 
     if (loading) return <div className="text-center py-10">Loading skills...</div>;
 
+    const displayedSkills = limit ? skills.slice(0, limit) : skills;
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-10 max-w-6xl mx-auto">
-            {skills.map((skill, index) => (
+            {displayedSkills.map((skill, index) => (
                 <div key={skill._id || index} className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/30 hover:border-purple-500/50 transition-all group flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">

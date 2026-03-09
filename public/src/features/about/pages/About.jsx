@@ -22,7 +22,7 @@ const About = () => {
     }, [dispatch]);
 
     return (
-        <main className="pt-24 pb-16">
+        <main className=" pb-16">
             <AboutSection />
             <Container>
 

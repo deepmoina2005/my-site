@@ -30,20 +30,58 @@ const AllEducations = () => {
         <CardTitle className="text-2xl font-bold">All Educations</CardTitle>
         <Button onClick={() => navigate("/education/add")}><Plus className="mr-2 h-4 w-4" /> Add Education</Button>
       </CardHeader>
-      <div className="rounded-md border">
+      <div className="rounded-md border bg-card">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name/Title</TableHead>
+              <TableHead className="w-[80px]">Logo</TableHead>
+              <TableHead>Institution</TableHead>
+              <TableHead>Degree & Field</TableHead>
+              <TableHead>Dates</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {loading ? (
-              <TableRow><TableCell colSpan={2} className="text-center">Loading...</TableCell></TableRow>
-            ) : (educations || []).map((item: any) => (
-              <TableRow key={item._id}>
-                <TableCell className="font-medium">{item.title || item.name || item.institution || item.degree}</TableCell>
+              <TableRow>
+                <TableCell colSpan={5} className="text-center py-10">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                    <p className="text-sm text-muted-foreground">Loading education history...</p>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : educations.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={5} className="text-center py-10 text-muted-foreground">
+                  No education entries found. Add your first one!
+                </TableCell>
+              </TableRow>
+            ) : educations.map((item: any) => (
+              <TableRow key={item._id} className="group hover:bg-muted/50 transition-colors">
+                <TableCell>
+                  <div className="h-10 w-10 rounded-md border bg-muted p-1 flex items-center justify-center overflow-hidden">
+                    {item.logo ? (
+                      <img src={item.logo} alt={item.institution} className="h-full w-full object-contain" />
+                    ) : (
+                      <Plus className="h-4 w-4 text-muted-foreground opacity-50" />
+                    )}
+                  </div>
+                </TableCell>
+                <TableCell className="font-semibold">{item.institution}</TableCell>
+                <TableCell>
+                  <div className="flex flex-col">
+                    <span className="text-sm">{item.degree}</span>
+                    <span className="text-xs text-muted-foreground">{item.fieldOfStudy || "No field specified"}</span>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                    {item.startDate ? new Date(item.startDate).getFullYear() : "N/A"}
+                    <span>-</span>
+                    {item.endDate ? new Date(item.endDate).getFullYear() : "Present"}
+                  </div>
+                </TableCell>
                 <TableCell className="text-right space-x-2">
                   <Button variant="ghost" size="icon" onClick={() => navigate(`/education/${item._id}/edit`)}>
                     <Pencil className="h-4 w-4" />

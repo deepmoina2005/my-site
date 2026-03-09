@@ -25,11 +25,11 @@ const BlogPage = () => {
     });
 
     return (
-        <main className="pt-24 pb-24 min-h-screen bg-white dark:bg-slate-950 transition-colors duration-500">
+        <main className="pb-24 min-h-screen bg-white dark:bg-slate-950 transition-colors duration-500">
             {/* Elegant Header Section */}
             <div className="relative overflow-hidden mb-16">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-transparent to-blue-600/10 dark:from-purple-900/20 dark:to-blue-900/20 pointer-events-none" />
-                <Container className="pt-12 pb-20 text-center relative z-10">
+                <Container className="pt-12 pb-20 text-center relative z-10 mt-16">
                     <span className="inline-block px-4 py-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 text-[10px] font-black uppercase tracking-[0.2em] mb-6">
                         Insights & Articles
                     </span>
