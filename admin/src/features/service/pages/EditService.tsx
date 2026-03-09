@@ -14,7 +14,7 @@ import {
   ArrowLeft, Loader2
 } from "lucide-react";
 import toast from "react-hot-toast";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 
 const EditService = () => {
   const { id } = useParams();
@@ -49,7 +49,7 @@ const EditService = () => {
   useEffect(() => {
     if (id) {
       setLoading(true);
-      axios.get(`http://localhost:4000/api/services/${id}`).then(res => {
+      axiosInstance.get(`/services/${id}`).then(res => {
         const data = res.data.entity || res.data;
         setFormData({
           title: data.title || "",

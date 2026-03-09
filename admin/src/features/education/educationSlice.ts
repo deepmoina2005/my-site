@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-const API_URL = "http://localhost:4000/api/educations";
+import axiosInstance from "@/utils/axiosInstance";
 
 export const fetchEducations = createAsyncThunk("educations/fetchAll", async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get(API_URL);
+    const response = await axiosInstance.get("/educations");
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to fetch");
@@ -15,7 +13,7 @@ export const fetchEducations = createAsyncThunk("educations/fetchAll", async (_,
 
 export const addEducation = createAsyncThunk("educations/add", async (data: any, { rejectWithValue }) => {
   try {
-    const response = await axios.post(API_URL, data);
+    const response = await axiosInstance.post("/educations", data);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to add");
@@ -24,7 +22,7 @@ export const addEducation = createAsyncThunk("educations/add", async (data: any,
 
 export const updateEducation = createAsyncThunk("educations/update", async ({ id, data }: { id: string; data: any }, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${API_URL}/${id}`, data);
+    const response = await axiosInstance.put(`/educations/${id}`, data);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to update");
@@ -33,7 +31,7 @@ export const updateEducation = createAsyncThunk("educations/update", async ({ id
 
 export const deleteEducation = createAsyncThunk("educations/delete", async (id: string, { rejectWithValue }) => {
   try {
-    await axios.delete(`${API_URL}/${id}`);
+    await axiosInstance.delete(`/educations/${id}`);
     return id;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to delete");

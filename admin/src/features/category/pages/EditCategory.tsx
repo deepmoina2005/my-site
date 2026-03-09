@@ -8,7 +8,7 @@ import { Input } from "@/shared/components/ui/input";
 import { Textarea } from "@/shared/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import toast from "react-hot-toast";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 
 const EditCategory = () => {
   const { id } = useParams();
@@ -19,11 +19,11 @@ const EditCategory = () => {
 
   useEffect(() => {
     if (id) {
-       setLoading(true);
-       axios.get(`http://localhost:4000/api/categories/${id}`).then(res => {
-         setFormData(res.data.entity || res.data);
-         setLoading(false);
-       }).catch(() => setLoading(false));
+      setLoading(true);
+      axiosInstance.get(`/categories/${id}`).then(res => {
+        setFormData(res.data.entity || res.data);
+        setLoading(false);
+      }).catch(() => setLoading(false));
     }
   }, [id]);
 

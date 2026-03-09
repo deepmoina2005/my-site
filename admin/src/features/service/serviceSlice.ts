@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-const API_URL = "http://localhost:4000/api/services";
+import axiosInstance from "@/utils/axiosInstance";
 
 export const fetchServices = createAsyncThunk("services/fetchAll", async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get(API_URL);
+    const response = await axiosInstance.get("/services");
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to fetch");
@@ -15,7 +13,7 @@ export const fetchServices = createAsyncThunk("services/fetchAll", async (_, { r
 
 export const addService = createAsyncThunk("services/add", async (data: any, { rejectWithValue }) => {
   try {
-    const response = await axios.post(API_URL, data);
+    const response = await axiosInstance.post("/services", data);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to add");
@@ -24,7 +22,7 @@ export const addService = createAsyncThunk("services/add", async (data: any, { r
 
 export const updateService = createAsyncThunk("services/update", async ({ id, data }: { id: string; data: any }, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${API_URL}/${id}`, data);
+    const response = await axiosInstance.put(`/services/${id}`, data);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to update");
@@ -33,7 +31,7 @@ export const updateService = createAsyncThunk("services/update", async ({ id, da
 
 export const deleteService = createAsyncThunk("services/delete", async (id: string, { rejectWithValue }) => {
   try {
-    await axios.delete(`${API_URL}/${id}`);
+    await axiosInstance.delete(`/services/${id}`);
     return id;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to delete");

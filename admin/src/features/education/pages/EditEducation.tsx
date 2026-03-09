@@ -8,7 +8,7 @@ import { Input } from "@/shared/components/ui/input";
 import { Textarea } from "@/shared/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import toast from "react-hot-toast";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 
 const EditEducation = () => {
   const { id } = useParams();
@@ -19,11 +19,11 @@ const EditEducation = () => {
 
   useEffect(() => {
     if (id) {
-       setLoading(true);
-       axios.get(`http://localhost:4000/api/educations/${id}`).then(res => {
-         setFormData(res.data.entity || res.data);
-         setLoading(false);
-       }).catch(() => setLoading(false));
+      setLoading(true);
+      axiosInstance.get(`/educations/${id}`).then(res => {
+        setFormData(res.data.entity || res.data);
+        setLoading(false);
+      }).catch(() => setLoading(false));
     }
   }, [id]);
 

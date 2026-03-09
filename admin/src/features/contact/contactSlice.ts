@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-const API_URL = "http://localhost:4000/api/contacts";
+import axiosInstance from "@/utils/axiosInstance";
 
 export const fetchContacts = createAsyncThunk("contacts/fetchAll", async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get(API_URL);
+    const response = await axiosInstance.get("/contacts");
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to fetch");
@@ -15,7 +13,7 @@ export const fetchContacts = createAsyncThunk("contacts/fetchAll", async (_, { r
 
 export const updateContactStatus = createAsyncThunk("contacts/updateStatus", async ({ id, status }: { id: string; status: string }, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${API_URL}/${id}`, { status });
+    const response = await axiosInstance.put(`/contacts/${id}`, { status });
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to update status");
@@ -24,7 +22,7 @@ export const updateContactStatus = createAsyncThunk("contacts/updateStatus", asy
 
 export const deleteContact = createAsyncThunk("contacts/delete", async (id: string, { rejectWithValue }) => {
   try {
-    await axios.delete(`${API_URL}/${id}`);
+    await axiosInstance.delete(`/contacts/${id}`);
     return id;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to delete");
