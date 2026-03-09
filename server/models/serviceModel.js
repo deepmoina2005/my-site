@@ -7,7 +7,6 @@ const ServiceSchema = new mongoose.Schema(
     fullDescription: { type: String },
     category: { type: String },
     status: { type: String, enum: ["Active", "Draft"], default: "Active" },
-    icon: { type: String },
     image: { type: String },
     technologies: [{ type: String }],
     tags: [{ type: String }],
@@ -17,11 +16,6 @@ const ServiceSchema = new mongoose.Schema(
         description: { type: String }
       }
     ],
-    pricing: {
-      startingPrice: { type: Number },
-      pricingType: { type: String, enum: ["Fixed", "Hourly", "Starting At"] },
-      deliveryTime: { type: String }
-    },
     links: {
       demo: { type: String },
       github: { type: String },

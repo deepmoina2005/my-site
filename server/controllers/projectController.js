@@ -18,6 +18,7 @@ export const createProject = async (req, res) => {
       associatedWith,
       isOngoing,
       category,
+      features,
     } = req.body;
 
     if (!name || !description || !startDate) {
@@ -29,12 +30,9 @@ export const createProject = async (req, res) => {
     /* ===============================
        CLOUDINARY MEDIA UPLOAD
     ================================ */
-    let mediaUrls = [];
     let coverImageUrl = "";
 
     if (req.files) {
-      // req.files is an object if using multer.fields()
-      // Example: { coverImage: [File], media: [File, File, ...] }
       if (req.files.coverImage && req.files.coverImage.length > 0) {
         const uploadResult = await cloudinary.uploader.upload(
           `data:${req.files.coverImage[0].mimetype};base64,${req.files.coverImage[0].buffer.toString(
@@ -43,16 +41,6 @@ export const createProject = async (req, res) => {
           { folder: "projects", resource_type: "auto" }
         );
         coverImageUrl = uploadResult.secure_url;
-      }
-
-      if (req.files.media && req.files.media.length > 0) {
-        for (const file of req.files.media) {
-          const uploadResult = await cloudinary.uploader.upload(
-            `data:${file.mimetype};base64,${file.buffer.toString("base64")}`,
-            { folder: "projects", resource_type: "auto" }
-          );
-          mediaUrls.push(uploadResult.secure_url);
-        }
       }
     }
 
@@ -75,7 +63,6 @@ export const createProject = async (req, res) => {
       name,
       description,
       skills: skillsArray,
-      media: mediaUrls,
       coverImage: coverImageUrl,
       liveLink: liveLink || "",
       codeLink: codeLink || "",
@@ -84,6 +71,7 @@ export const createProject = async (req, res) => {
       associatedWith: associatedWith || "",
       isOngoing: isOngoing === "true" || isOngoing === true, // FormData sends strings
       category: category || "",
+      features: features ? (typeof features === 'string' ? JSON.parse(features) : features) : [],
     });
 
     await project.save();
@@ -159,6 +147,7 @@ export const updateProject = async (req, res) => {
       associatedWith,
       isOngoing,
       category,
+      features,
     } = req.body
 
     if (!name || !description || !startDate) {
@@ -200,6 +189,7 @@ export const updateProject = async (req, res) => {
     project.associatedWith = associatedWith || ""
     project.isOngoing = isOngoing === "true" || isOngoing === true
     project.category = category || project.category
+    project.features = features ? (typeof features === 'string' ? JSON.parse(features) : features) : project.features
 
     // 🔑 IMPORTANT
     project.endDate = project.isOngoing
@@ -220,35 +210,6 @@ export const updateProject = async (req, res) => {
           { folder: "projects", resource_type: "auto" }
         )
         project.coverImage = upload.secure_url
-      }
-
-      if (req.files.media?.length) {
-        const mediaUrls = []
-
-        for (const file of req.files.media) {
-          const upload = await cloudinary.uploader.upload(
-            `data:${file.mimetype};base64,${file.buffer.toString("base64")}`,
-            { folder: "projects", resource_type: "auto" }
-          )
-          mediaUrls.push(upload.secure_url)
-        }
-
-        project.media = mediaUrls
-      }
-
-      // ✅ multer.array("media")
-      if (Array.isArray(req.files)) {
-        const mediaUrls = []
-
-        for (const file of req.files) {
-          const upload = await cloudinary.uploader.upload(
-            `data:${file.mimetype};base64,${file.buffer.toString("base64")}`,
-            { folder: "projects", resource_type: "auto" }
-          )
-          mediaUrls.push(upload.secure_url)
-        }
-
-        if (mediaUrls.length) project.media = mediaUrls
       }
     }
 

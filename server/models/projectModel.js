@@ -19,10 +19,6 @@ const projectSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
-    media: {
-      type: [String], // URLs or file paths of images, videos, documents
-      default: [],
-    },
     coverImage: {
       type: String, // main cover image URL or file path
     },
@@ -46,6 +42,12 @@ const projectSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    features: [
+      {
+        title: { type: String },
+        description: { type: String }
+      }
+    ],
   },
   { timestamps: true }
 );

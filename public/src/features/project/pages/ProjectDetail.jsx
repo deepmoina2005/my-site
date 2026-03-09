@@ -69,18 +69,24 @@ const ProjectDetail = () => {
                             </p>
                         </div>
 
-                        <div className="flex flex-wrap gap-4 pt-4">
-                            {project.liveLink && (
-                                <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-8 py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-2xl font-bold transition-all shadow-xl shadow-purple-500/25 uppercase tracking-widest text-sm">
-                                    <ExternalLink size={20} /> Live Demo
-                                </a>
-                            )}
-                            {project.codeLink && (
-                                <a href={project.codeLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-8 py-4 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white rounded-2xl font-bold transition-all uppercase tracking-widest text-sm text-center">
-                                    <Github size={20} /> Source Code
-                                </a>
-                            )}
-                        </div>
+                        {/* Project Features / Highlights */}
+                        {project.features?.length > 0 && (
+                            <div className="pt-8 border-t border-slate-100 dark:border-slate-800">
+                                <h3 className="font-bold text-sm uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2">
+                                    <Layers size={16} /> Project Highlights
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {project.features.map((feature, index) => (
+                                        <div key={index} className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-purple-500/30 transition-all group">
+                                            <h4 className="font-bold text-slate-900 dark:text-white mb-2 group-hover:text-purple-600 transition-colors">{feature.title}</h4>
+                                            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                                                {feature.description}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
                         <div className="pt-8 border-t border-slate-100 dark:border-slate-800">
                             <h3 className="font-bold text-sm uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
@@ -97,19 +103,40 @@ const ProjectDetail = () => {
                     </div>
 
                     <div className="space-y-6">
-                        <div className="rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl shadow-purple-500/5">
-                            <img src={project.coverImage} alt={project.name} className="w-full h-auto" />
-                        </div>
-                        {project.media?.length > 0 && (
-                            <div className="grid grid-cols-2 gap-4">
-                                {project.media.map((img, i) => (
-                                    <div key={i} className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-purple-500/50 transition-all group shadow-lg">
-                                        <img src={img} alt={`${project.name} ${i}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+  {/* Project Image */}
+  <div className="rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-2xl transition-shadow duration-300">
+    <img
+      src={project.coverImage}
+      alt={project.name}
+      className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
+    />
+  </div>
+
+  {/* Action Buttons */}
+  <div className="flex flex-wrap gap-4 pt-4">
+    {project.liveLink && (
+      <a
+        href={project.liveLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-3 px-6 lg:px-8 py-3 lg:py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-2xl font-bold transition-all shadow-lg hover:shadow-xl uppercase tracking-widest text-sm transform hover:-translate-y-1"
+      >
+        <ExternalLink size={20} /> Live Demo
+      </a>
+    )}
+
+    {project.codeLink && (
+      <a
+        href={project.codeLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-3 px-6 lg:px-8 py-3 lg:py-4 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white rounded-2xl font-bold transition-all shadow-md hover:shadow-lg uppercase tracking-widest text-sm transform hover:-translate-y-1"
+      >
+        <Github size={20} /> Source Code
+      </a>
+    )}
+  </div>
+</div>
                 </div>
             </Container>
         </main>

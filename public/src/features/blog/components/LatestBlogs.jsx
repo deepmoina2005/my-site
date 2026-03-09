@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 const LatestBlogs = () => {
     const { blogs, loading } = useSelector((state) => state.blogs);
@@ -29,13 +30,12 @@ const LatestBlogs = () => {
                             {new Date(blog.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                         </div>
                         <h3 className="text-xl font-black mb-4 group-hover:text-purple-600 transition-colors leading-tight uppercase tracking-tight">{blog.title}</h3>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-8 flex-grow leading-relaxed">
-                            {blog.summary || blog.content?.replace(/<[^>]*>?/gm, '').substring(0, 100)}...
+                        <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 mb-8 flex-grow leading-relaxed">
+                            {blog.summary || blog.content?.replace(/<[^>]*>?/gm, '').substring(0, 120)}...
                         </p>
-                        <div className="flex items-center gap-1.5 pt-6 border-t border-slate-50 dark:border-slate-800/50">
-                            {blog.tags?.slice(0, 2).map(tag => (
-                                <span key={tag} className="text-[9px] font-black text-slate-400 uppercase tracking-widest px-2 py-0.5 bg-slate-50 dark:bg-slate-800 rounded-md">#{tag}</span>
-                            ))}
+                        <div className="mt-auto pt-6 border-t border-slate-50 dark:border-slate-800/50 flex items-center justify-between group-hover:text-purple-600 transition-colors">
+                            <span className="text-xs font-bold uppercase tracking-wider">Read Article</span>
+                            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                         </div>
                     </div>
                 </Link>

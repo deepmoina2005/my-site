@@ -14,7 +14,7 @@ import { Badge } from "@/shared/components/ui/badge"
 import { Switch } from "@/shared/components/ui/switch"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Trash2, Plus } from "lucide-react"
 
 import { fetchCategories } from "@/features/category/categorySlice"
 import {
@@ -38,8 +38,6 @@ const ProjectAdd = () => {
   const [category, setCategory] = useState("")
   const [skills, setSkills] = useState<string[]>([])
   const [skillInput, setSkillInput] = useState("")
-  const [mediaFiles, setMediaFiles] = useState<File[]>([])
-  const [mediaPreviews, setMediaPreviews] = useState<string[]>([])
   const [coverImage, setCoverImage] = useState<File | undefined>(undefined)
   const [coverPreview, setCoverPreview] = useState<string>("")
   const [liveLink, setLiveLink] = useState("")
@@ -48,6 +46,7 @@ const ProjectAdd = () => {
   const [endDate, setEndDate] = useState("")
   const [isOngoing, setIsOngoing] = useState(false)
   const [associatedWith, setAssociatedWith] = useState("")
+  const [features, setFeatures] = useState<{ title: string; description: string }[]>([])
 
   useEffect(() => {
     dispatch(fetchCategories("project"))
@@ -68,8 +67,6 @@ const ProjectAdd = () => {
       setDescription("")
       setSkills([])
       setSkillInput("")
-      setMediaFiles([])
-      setMediaPreviews([])
       setCoverImage(undefined)
       setCoverPreview("")
       setLiveLink("")
@@ -78,6 +75,7 @@ const ProjectAdd = () => {
       setEndDate("")
       setIsOngoing(false)
       setAssociatedWith("")
+      setFeatures([])
     }
   }, [error, success, dispatch])
 
@@ -88,15 +86,6 @@ const ProjectAdd = () => {
     setSkillInput("")
   }
   const removeSkill = (skill: string) => setSkills(prev => prev.filter(s => s !== skill))
-
-  // Media previews
-  const handleMediaChange = (files: FileList | null) => {
-    if (!files) return
-    const fileArray = Array.from(files)
-    setMediaFiles(fileArray)
-    const previews = fileArray.map(f => URL.createObjectURL(f))
-    setMediaPreviews(previews)
-  }
 
   // Cover image preview
   const handleCoverChange = (file: File | null) => {
@@ -123,155 +112,204 @@ const ProjectAdd = () => {
       liveLink,
       codeLink,
       associatedWith,
-      mediaFiles,
       coverImage,
+      features,
     }
 
-    dispatch(createProject(projectPayload))
+    dispatch(createProject(projectPayload as any))
   }
 
   return (
     <div className="py-6 space-y-6">
       {/* Back button */}
       <div className="flex items-center justify-between">
-        <Button variant="ghost" className="gap-2" onClick={() => navigate(-1)}>
+        <Button variant="outline" className="gap-2 rounded-xl" onClick={() => navigate(-1)}>
           <ArrowLeft className="h-4 w-4" />
-          Back
+          Back to Projects
         </Button>
       </div>
 
-      {/* Project Info */}
-      <Card>
-        <CardContent className="space-y-4 pt-6">
-          <div className="space-y-2">
-            <Label>Name</Label>
-            <Input placeholder="Project Name" value={name} onChange={e => setName(e.target.value)} />
-          </div>
-          <div className="space-y-2">
-            <Label>Description</Label>
-            <Input placeholder="Project Description" value={description} onChange={e => setDescription(e.target.value)} />
-          </div>
-          <div className="space-y-2">
-            <Label>Associated With</Label>
-            <Input placeholder="Company / Personal / Course" value={associatedWith} onChange={e => setAssociatedWith(e.target.value)} />
-          </div>
-        </CardContent>
-      </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-6">
+          {/* Project Info */}
+          <Card className="rounded-[2rem] border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+            <CardHeader>
+              <CardTitle>Basic Information</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label>Project Name</Label>
+                <Input placeholder="Project Name" value={name} onChange={e => setName(e.target.value)} className="rounded-xl h-12" />
+              </div>
+              <div className="space-y-2">
+                <Label>Description</Label>
+                <Input placeholder="Project Description" value={description} onChange={e => setDescription(e.target.value)} className="rounded-xl h-12" />
+              </div>
+              <div className="space-y-2">
+                <Label>Associated With</Label>
+                <Input placeholder="Company / Personal / Course" value={associatedWith} onChange={e => setAssociatedWith(e.target.value)} className="rounded-xl h-12" />
+              </div>
+            </CardContent>
+          </Card>
 
-      {/* Category */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Category</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Select value={category} onValueChange={setCategory}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select Category" />
-            </SelectTrigger>
-            <SelectContent>
-              {categories.map((cat: any) => (
-                <SelectItem key={cat._id} value={cat.name}>
-                  {cat.name}
-                </SelectItem>
+          {/* Project Features */}
+          <Card className="rounded-[2rem] border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Project Features</CardTitle>
+              <Button onClick={() => setFeatures([...features, { title: "", description: "" }])} size="sm" variant="outline" className="rounded-xl gap-2">
+                <Plus size={16} />
+                Add Feature
+              </Button>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {features.map((feature, index) => (
+                <div key={index} className="flex gap-4 items-start p-6 border rounded-[1.5rem] relative bg-slate-50 dark:bg-slate-900/30 group border-slate-100 dark:border-slate-800 transition-all hover:border-blue-500/30">
+                  <div className="flex-grow space-y-3">
+                    <Input
+                      placeholder="e.g., Responsive Design"
+                      value={feature.title}
+                      onChange={e => {
+                        const newFeatures = [...features];
+                        newFeatures[index].title = e.target.value;
+                        setFeatures(newFeatures);
+                      }}
+                      className="rounded-xl border-slate-200 dark:border-slate-700 h-10"
+                    />
+                    <Input
+                      placeholder="Brief details about this feature..."
+                      value={feature.description}
+                      onChange={e => {
+                        const newFeatures = [...features];
+                        newFeatures[index].description = e.target.value;
+                        setFeatures(newFeatures);
+                      }}
+                      className="rounded-xl border-slate-200 dark:border-slate-700 h-10"
+                    />
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setFeatures(features.filter((_, i) => i !== index))}
+                    className="shrink-0 text-slate-400 hover:text-red-500 rounded-xl"
+                  >
+                    <Trash2 size={18} />
+                  </Button>
+                </div>
               ))}
-            </SelectContent>
-          </Select>
-        </CardContent>
-      </Card>
+              {features.length === 0 && (
+                <div className="text-center py-10 border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-[1.5rem] text-slate-400">
+                  No features added yet. Click "Add Feature" to highlight project highlights.
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="space-y-6">
+          {/* Category */}
+          <Card className="rounded-[2rem] border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+            <CardHeader>
+              <CardTitle>Categorization</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Select value={category} onValueChange={setCategory}>
+                <SelectTrigger className="w-full rounded-xl h-12">
+                  <SelectValue placeholder="Select Category" />
+                </SelectTrigger>
+                <SelectContent className="rounded-xl">
+                  {categories.map((cat: any) => (
+                    <SelectItem key={cat._id} value={cat.name}>
+                      {cat.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </CardContent>
+          </Card>
+
+          {/* Timeline */}
+          <Card className="rounded-[2rem] border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+            <CardHeader>
+              <CardTitle>Timeline</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label>Start Date</Label>
+                <Input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} className="rounded-xl h-12" />
+              </div>
+              {!isOngoing && (
+                <div className="space-y-2">
+                  <Label>End Date</Label>
+                  <Input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className="rounded-xl h-12" />
+                </div>
+              )}
+              <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-slate-800">
+                <Label className="cursor-pointer">Ongoing Project</Label>
+                <Switch checked={isOngoing} onCheckedChange={setIsOngoing} />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Links */}
+          <Card className="rounded-[2rem] border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+            <CardHeader>
+              <CardTitle>Project Links</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label>Live Link</Label>
+                <Input placeholder="https://example.com" value={liveLink} onChange={e => setLiveLink(e.target.value)} className="rounded-xl h-11" />
+              </div>
+              <div className="space-y-2">
+                <Label>Code Link</Label>
+                <Input placeholder="https://github.com/username/repo" value={codeLink} onChange={e => setCodeLink(e.target.value)} className="rounded-xl h-11" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
 
       {/* Skills */}
-      <Card>
+      <Card className="rounded-[2rem] border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
         <CardHeader>
-          <CardTitle>Skills</CardTitle>
+          <CardTitle>Skills & Technologies</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-2">
+        <CardContent className="space-y-4">
           <div className="flex gap-2">
             <Input
-              placeholder="Add skill"
+              placeholder="e.g., React, Node.js, AWS"
               value={skillInput}
               onChange={e => setSkillInput(e.target.value)}
               onKeyDown={e => e.key === "Enter" && addSkill()}
+              className="rounded-xl h-12"
             />
-            <Button onClick={addSkill}>Add</Button>
+            <Button onClick={addSkill} className="rounded-xl px-8">Add</Button>
           </div>
           <div className="flex flex-wrap gap-2 mt-2">
             {skills.map(skill => (
-              <Badge key={skill} variant="secondary" className="cursor-pointer" onClick={() => removeSkill(skill)}>
-                {skill} ✕
+              <Badge key={skill} variant="secondary" className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-red-50 hover:text-red-500 transition-colors cursor-pointer border-0" onClick={() => removeSkill(skill)}>
+                {skill} <span className="ml-2 font-normal opacity-50">✕</span>
               </Badge>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Cover Image Upload */}
-      <Card>
+      {/* Cover Image */}
+      <Card className="rounded-[2rem] border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
         <CardHeader>
           <CardTitle>Cover Image</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-2">
-          <Input type="file" accept="image/*" onChange={e => handleCoverChange(e.target.files ? e.target.files[0] : null)} />
-          {coverPreview && <img src={coverPreview} alt="Cover Preview" className="w-48 h-48 object-cover rounded-md mt-2" />}
-        </CardContent>
-      </Card>
-
-      {/* Media Upload */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Media</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <Input type="file" multiple accept="image/*,video/*,application/pdf" onChange={e => handleMediaChange(e.target.files)} />
-          <div className="flex flex-wrap gap-2 mt-2">
-            {mediaPreviews.map((src, idx) => (
-              <img key={idx} src={src} alt={`Media ${idx}`} className="w-32 h-32 object-cover rounded-md" />
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Links */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Links</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <div className="space-y-2">
-            <Label>Live Link</Label>
-            <Input placeholder="https://example.com" value={liveLink} onChange={e => setLiveLink(e.target.value)} />
-          </div>
-          <div className="space-y-2">
-            <Label>Code Link</Label>
-            <Input placeholder="https://github.com/username/repo" value={codeLink} onChange={e => setCodeLink(e.target.value)} />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Dates & Ongoing */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Timeline</CardTitle>
-        </CardHeader>
-        <CardContent className="flex gap-6 items-center">
-          <div className="flex flex-col gap-1">
-            <Label>Start Date</Label>
-            <Input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} />
-          </div>
-          <div className="flex flex-col gap-1">
-            <Label>End Date</Label>
-            <Input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} disabled={isOngoing} />
-          </div>
-          <div className="flex items-center gap-2">
-            <Label>Ongoing</Label>
-            <Switch checked={isOngoing} onCheckedChange={setIsOngoing} />
-          </div>
+        <CardContent className="space-y-4">
+          <Input type="file" accept="image/*" onChange={e => handleCoverChange(e.target.files ? e.target.files[0] : null)} className="rounded-xl h-11 pt-2" />
+          {coverPreview && <img src={coverPreview} alt="Cover Preview" className="w-full max-w-2xl aspect-video object-cover rounded-2xl shadow-lg" />}
         </CardContent>
       </Card>
 
       {/* Submit */}
-      <Button onClick={handleSubmit} className="w-full" disabled={loading}>
-        {loading ? "Saving..." : "Save Project"}
-      </Button>
+        <Button onClick={handleSubmit} className="w-full" disabled={loading}>
+          {loading ? "Creating Project..." : "Publish Project"}
+        </Button>
     </div>
   )
 }

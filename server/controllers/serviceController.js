@@ -31,22 +31,12 @@ export const createService = async (req, res) => {
       technologies,
       tags,
       features,
-      pricing,
       links,
     } = req.body;
 
-    let iconUrl = "";
     let imageUrl = "";
 
     if (req.files) {
-      if (req.files.icon?.length > 0) {
-        const file = req.files.icon[0];
-        const uploadResult = await cloudinary.uploader.upload(
-          `data:${file.mimetype};base64,${file.buffer.toString("base64")}`,
-          { folder: "services", resource_type: "auto" }
-        );
-        iconUrl = uploadResult.secure_url;
-      }
       if (req.files.image?.length > 0) {
         const file = req.files.image[0];
         const uploadResult = await cloudinary.uploader.upload(
@@ -72,12 +62,10 @@ export const createService = async (req, res) => {
       fullDescription,
       category,
       status,
-      icon: iconUrl,
       image: imageUrl,
       technologies: parseField(technologies),
       tags: parseField(tags),
       features: parseField(features),
-      pricing: parseField(pricing),
       links: parseField(links),
     });
 
@@ -104,19 +92,10 @@ export const updateService = async (req, res) => {
       technologies,
       tags,
       features,
-      pricing,
       links,
     } = req.body;
 
     if (req.files) {
-      if (req.files.icon?.length > 0) {
-        const file = req.files.icon[0];
-        const uploadResult = await cloudinary.uploader.upload(
-          `data:${file.mimetype};base64,${file.buffer.toString("base64")}`,
-          { folder: "services", resource_type: "auto" }
-        );
-        service.icon = uploadResult.secure_url;
-      }
       if (req.files.image?.length > 0) {
         const file = req.files.image[0];
         const uploadResult = await cloudinary.uploader.upload(
@@ -144,7 +123,6 @@ export const updateService = async (req, res) => {
     service.technologies = parseField(technologies) || service.technologies;
     service.tags = parseField(tags) || service.tags;
     service.features = parseField(features) || service.features;
-    service.pricing = parseField(pricing) || service.pricing;
     service.links = parseField(links) || service.links;
 
     await service.save();

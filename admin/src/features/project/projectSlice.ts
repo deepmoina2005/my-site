@@ -24,7 +24,6 @@ export const createProject = createAsyncThunk<
     formData.append("name", data.name);
     formData.append("description", data.description);
     data.skills.forEach((skill) => formData.append("skills", skill));
-    data.media?.forEach((file) => formData.append("media", file));
     if (data.coverImage) formData.append("coverImage", data.coverImage);
     if (data.liveLink) formData.append("liveLink", data.liveLink);
     if (data.codeLink) formData.append("codeLink", data.codeLink);
@@ -33,6 +32,7 @@ export const createProject = createAsyncThunk<
     if (data.associatedWith)
       formData.append("associatedWith", data.associatedWith);
     formData.append("isOngoing", data.isOngoing.toString());
+    if (data.features) formData.append("features", JSON.stringify(data.features));
 
     const response = await createProjectService(formData);
     if (!response.project) throw new Error("Project data missing");
@@ -88,7 +88,6 @@ export const updateProject = createAsyncThunk<
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("skills", JSON.stringify(data.skills));
-    data.media?.forEach((file) => formData.append("media", file));
     if (data.coverImage) formData.append("coverImage", data.coverImage);
     if (data.liveLink) formData.append("liveLink", data.liveLink);
     if (data.codeLink) formData.append("codeLink", data.codeLink);

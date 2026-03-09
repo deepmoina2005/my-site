@@ -10,12 +10,10 @@ import Hero from "@/features/home/components/Hero"
 import AboutSection from "@/features/home/components/AboutSection"
 import FeaturedProjects from "@/features/project/components/FeaturedProjects"
 import GithubActivity from "@/features/home/components/GithubActivity"
-import ServicesSection from "@/features/service/components/ServicesSection"
 import SkillList from "@/features/skill/components/SkillList"
 import CertificateList from "@/features/certificate/components/CertificateList"
 
 import { fetchProjects } from "@/features/project/projectSlice"
-import { fetchServices } from "@/features/service/serviceSlice"
 import { fetchSkills } from "@/features/skill/skillSlice"
 import { fetchCertificates } from "@/features/certificate/certificateSlice"
 
@@ -25,7 +23,6 @@ export default function Home() {
 
     useEffect(() => {
         dispatch(fetchProjects())
-        dispatch(fetchServices())
         dispatch(fetchSkills())
         dispatch(fetchCertificates())
     }, [dispatch])
@@ -39,7 +36,7 @@ export default function Home() {
             {/* ABOUT ME */}
             <AboutSection />
 
-             {/* GITHUB ACTIVITY */}
+            {/* GITHUB ACTIVITY */}
             <section className="py-20 bg-slate-50 dark:bg-slate-900">
                 <Container>
                     <SectionTitle
@@ -51,7 +48,7 @@ export default function Home() {
                 </Container>
             </section>
 
-                        {/* SKILLS */}
+            {/* SKILLS */}
             <section className="py-20">
                 <Container>
                     <SectionTitle
@@ -88,18 +85,6 @@ export default function Home() {
                     <div className="mt-10">
                         <CertificateList />
                     </div>
-                </Container>
-            </section>
-
-            {/* SERVICES */}
-            <section className="py-20 bg-slate-50 dark:bg-slate-900/50">
-                <Container>
-                    <SectionTitle
-                        text1="SOLUTIONS"
-                        text2="Expert Services"
-                        text3="Specialized services I provide to startups and businesses."
-                    />
-                    <ServicesSection />
                 </Container>
             </section>
 

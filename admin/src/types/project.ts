@@ -7,14 +7,15 @@ export interface ProjectPayload {
   name: string;
   description: string;
   skills: string[];
-  media?: File[];       // multiple files
   liveLink?: string;
   codeLink?: string;
   startDate: string;    // ISO date string
   endDate?: string;     // ISO date string or undefined if ongoing
   associatedWith?: string;
   isOngoing: boolean;
-   coverImage?: File;
+  coverImage?: File;
+  category?: string;
+  features?: { title: string; description: string }[];
 }
 
 /* ===============================
@@ -26,7 +27,6 @@ export interface Project {
   name: string;
   description: string;
   skills: string[];
-  media: string[];       // URLs of uploaded media
   liveLink?: string;
   codeLink?: string;
   startDate: string;     // ISO date string
@@ -35,6 +35,8 @@ export interface Project {
   isOngoing: boolean;
   createdAt: string;
   updatedAt: string;
+  category?: string;
+  features?: { title: string; description: string }[];
   status?: ReactNode;    // optional for frontend badges like "Ongoing" or "Completed"
 }
 

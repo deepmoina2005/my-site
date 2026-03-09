@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/shared/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import {
-  Plus, X, DollarSign, Clock, Link as LinkIcon,
+  Plus, X, Link as LinkIcon,
   ArrowLeft, Loader2
 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -22,7 +22,6 @@ const AddService = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { categories } = useSelector((state: RootState) => state.categories);
-  const iconInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState<any>({
@@ -34,11 +33,6 @@ const AddService = () => {
     technologies: [],
     tags: [],
     features: [{ title: "", description: "" }],
-    pricing: {
-      startingPrice: "",
-      pricingType: "Fixed",
-      deliveryTime: ""
-    },
     links: {
       demo: "",
       github: "",
@@ -46,8 +40,6 @@ const AddService = () => {
     }
   });
 
-  const [iconFile, setIconFile] = useState<File | null>(null);
-  const [iconPreview, setIconPreview] = useState<string>("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -74,23 +66,13 @@ const AddService = () => {
           technologies: data.technologies || [],
           tags: data.tags || [],
           features: data.features?.length > 0 ? data.features : [{ title: "", description: "" }],
-          pricing: data.pricing || { startingPrice: "", pricingType: "Fixed", deliveryTime: "" },
           links: data.links || { demo: "", github: "", documentation: "" }
         });
-        if (data.icon) setIconPreview(data.icon);
         if (data.image) setImagePreview(data.image);
         setLoading(false);
       }).catch(() => setLoading(false));
     }
   }, [id]);
-
-  const handleIconChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setIconFile(file);
-      setIconPreview(URL.createObjectURL(file));
-    }
-  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -114,7 +96,6 @@ const AddService = () => {
       }
     });
 
-    if (iconFile) data.append("icon", iconFile);
     if (imageFile) data.append("image", imageFile);
 
     if (id) {
@@ -243,8 +224,8 @@ const AddService = () => {
         </CardContent>
       </Card>
 
-      {/* Row 2: Short Description | Delivery Time */}
-      <Card>
+      {/* Row 2: Short Description */}
+      <Card className="md:col-span-2">
         <CardHeader>
           <CardTitle>Short Description</CardTitle>
         </CardHeader>
@@ -258,39 +239,8 @@ const AddService = () => {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Delivery Time</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="relative">
-            <Clock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4" />
-            <Input
-              className="h-12 pl-10"
-              placeholder="Ex: 2-3 Weeks"
-              value={formData.pricing.deliveryTime}
-              onChange={(e) => setFormData({ ...formData, pricing: { ...formData.pricing, deliveryTime: e.target.value } })}
-            />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Row 3: Service Icon | Banner Image */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Service Icon</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <Input type="file" ref={iconInputRef} onChange={handleIconChange} accept="image/*" />
-          {iconPreview && (
-            <div className="size-20 border rounded-lg p-2 bg-slate-50">
-              <img src={iconPreview} alt="Icon Preview" className="w-full h-full object-contain" />
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      <Card>
+      {/* Row 3: Banner Image */}
+      <Card className="md:col-span-2">
         <CardHeader>
           <CardTitle>Banner Image</CardTitle>
         </CardHeader>
@@ -353,45 +303,8 @@ const AddService = () => {
         </CardContent>
       </Card>
 
-      {/* Row 5: Pricing | Pricing Type */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Pricing</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="relative">
-            <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4" />
-            <Input
-              type="number"
-              className="h-12 pl-10"
-              placeholder="500"
-              value={formData.pricing.startingPrice}
-              onChange={(e) => setFormData({ ...formData, pricing: { ...formData.pricing, startingPrice: e.target.value } })}
-            />
-          </div>
-        </CardContent>
-      </Card>
+      {/* Row 4: Pricing removed */}
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Pricing Type</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Select
-            onValueChange={(val) => setFormData({ ...formData, pricing: { ...formData.pricing, pricingType: val } })}
-            value={formData.pricing.pricingType}
-          >
-            <SelectTrigger className="h-12">
-              <SelectValue placeholder="Select type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Fixed">Fixed Price</SelectItem>
-              <SelectItem value="Hourly">Hourly Rate</SelectItem>
-              <SelectItem value="Starting At">Starting At</SelectItem>
-            </SelectContent>
-          </Select>
-        </CardContent>
-      </Card>
 
       {/* Row 6: Demo Link | Github Link */}
       <Card>
