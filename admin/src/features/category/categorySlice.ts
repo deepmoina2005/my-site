@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-const API_URL = "http://localhost:4000/api/categories";
+import axiosInstance from "@/utils/axiosInstance";
 
 export const fetchCategories = createAsyncThunk("categories/fetchAll", async (module: string | undefined, { rejectWithValue }) => {
   try {
-    const url = module ? `${API_URL}?module=${module}` : API_URL;
-    const response = await axios.get(url);
+    const url = module ? `/categories?module=${module}` : "/categories";
+    const response = await axiosInstance.get(url);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to fetch");
@@ -16,7 +14,7 @@ export const fetchCategories = createAsyncThunk("categories/fetchAll", async (mo
 
 export const addCategory = createAsyncThunk("categories/add", async (data: any, { rejectWithValue }) => {
   try {
-    const response = await axios.post(API_URL, data);
+    const response = await axiosInstance.post("/categories", data);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to add");
@@ -25,7 +23,7 @@ export const addCategory = createAsyncThunk("categories/add", async (data: any, 
 
 export const updateCategory = createAsyncThunk("categories/update", async ({ id, data }: { id: string; data: any }, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${API_URL}/${id}`, data);
+    const response = await axiosInstance.put(`/categories/${id}`, data);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to update");
@@ -34,7 +32,7 @@ export const updateCategory = createAsyncThunk("categories/update", async ({ id,
 
 export const deleteCategory = createAsyncThunk("categories/delete", async (id: string, { rejectWithValue }) => {
   try {
-    await axios.delete(`${API_URL}/${id}`);
+    await axiosInstance.delete(`/categories/${id}`);
     return id;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Failed to delete");

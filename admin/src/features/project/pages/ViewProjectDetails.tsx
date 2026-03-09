@@ -205,19 +205,6 @@ const ViewProjectDetails = () => {
             </div>
           )}
 
-          {/* Media */}
-          {project.media?.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 pt-4">
-              {project.media.map((url, index) => (
-                <img
-                  key={index}
-                  src={url}
-                  alt={`media-${index}`}
-                  className="rounded-lg border object-cover"
-                />
-              ))}
-            </div>
-          )}
         </CardContent>
       </Card>
     </div>

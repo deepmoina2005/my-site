@@ -11,7 +11,7 @@ import { Badge } from "@/shared/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Plus, X } from "lucide-react";
 import toast from "react-hot-toast";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 
 const months = [
   "January", "February", "March", "April", "May", "June",
@@ -43,7 +43,7 @@ const EditCertificate = () => {
     dispatch(getSkills());
     if (id) {
       setLoading(true);
-      axios.get(`http://localhost:4000/api/certificates/${id}`).then(res => {
+      axiosInstance.get(`/certificates/${id}`).then(res => {
         setFormData(res.data.entity || res.data);
         setLoading(false);
       }).catch(() => setLoading(false));
