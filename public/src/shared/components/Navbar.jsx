@@ -167,7 +167,7 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 bg-slate-100/80 dark:bg-slate-800/80 backdrop-blur rounded-full border border-slate-200/50 dark:border-slate-700/50">
+                <div className="flex items-center gap-2">
                     <ThemeToggle />
                     <button onClick={() => setOpenMobileMenu(!openMobileMenu)} className="md:hidden p-1">
                         <MenuIcon size={24} className="active:scale-90 transition text-slate-600 dark:text-slate-400" />
