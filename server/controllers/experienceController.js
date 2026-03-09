@@ -147,7 +147,51 @@ export const updateExperience = async (req, res) => {
       });
     }
 
-    Object.assign(experience, req.body);
+    const {
+      title,
+      company,
+      workMode,
+      location,
+      startDate,
+      endDate,
+      isOngoing,
+      category,
+      tags,
+      description,
+      visibility,
+    } = req.body;
+
+    /* ---------- LOGO UPLOAD ---------- */
+    let logoUrl = experience.logo;
+    if (req.files?.logo) {
+      const logoFile = req.files.logo[0];
+      const base64Data = logoFile.buffer.toString("base64");
+
+      const uploadResult = await cloudinary.uploader.upload(
+        `data:${logoFile.mimetype};base64,${base64Data}`,
+        {
+          folder: "experience/logos",
+          resource_type: "image",
+        }
+      );
+
+      logoUrl = uploadResult.secure_url;
+    }
+
+    /* ---------- UPDATE FIELDS ---------- */
+    experience.title = title || experience.title;
+    experience.company = company || experience.company;
+    experience.workMode = workMode || experience.workMode;
+    experience.location = workMode === "Remote" ? "Remote" : (location || experience.location);
+    experience.startDate = startDate || experience.startDate;
+    experience.endDate = isOngoing === "true" ? null : (endDate || experience.endDate);
+    experience.isOngoing = isOngoing !== undefined ? isOngoing === "true" : experience.isOngoing;
+    experience.category = category || experience.category;
+    experience.tags = tags ? JSON.parse(tags) : experience.tags;
+    experience.description = description || experience.description;
+    experience.visibility = visibility || experience.visibility;
+    experience.logo = logoUrl;
+
     await experience.save();
 
     res.status(200).json({

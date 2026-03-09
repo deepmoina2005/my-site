@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
-
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import toast from "react-hot-toast"
@@ -29,8 +26,14 @@ import {
 import { Calendar } from "@/shared/components/ui/calendar"
 import { ArrowLeft, CalendarIcon } from "lucide-react"
 
+import { useDispatch, useSelector } from "react-redux"
+import { createExperience } from "@/features/experience/experienceSlice"
+import type { AppDispatch, RootState } from "@/redux/store"
+
 export const AddExperience = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>()
+  const { loading } = useSelector((state: RootState) => state.experiences)
 
   /* ================= STATES ================= */
   const [title, setTitle] = useState("")
@@ -86,7 +89,7 @@ export const AddExperience = () => {
   }
 
   /* ================= SUBMIT ================= */
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!title || !company || !startDate) {
       toast.error("Title, Company & Start Date are required")
       return
@@ -95,7 +98,8 @@ export const AddExperience = () => {
     const formData = new FormData()
     formData.append("title", title)
     formData.append("company", company)
-    formData.append("location", location)
+    formData.append("workMode", workMode)
+    formData.append("location", workMode === "Remote" ? "Remote" : location)
     formData.append("startDate", startDate.toISOString())
     formData.append(
       "endDate",
@@ -108,21 +112,24 @@ export const AddExperience = () => {
     formData.append("visibility", isPublic ? "public" : "private")
     if (logo) formData.append("logo", logo)
 
-    console.log("EXPERIENCE READY", Object.fromEntries(formData))
-
-    toast.success("Experience added successfully 💼")
-    navigate("/experience/all")
+    try {
+      await dispatch(createExperience(formData)).unwrap()
+      toast.success("Experience added successfully 💼")
+      navigate("/experience/all")
+    } catch (err: any) {
+      toast.error(err || "Failed to add experience")
+    }
   }
 
   return (
     <div className="py-6 grid grid-cols-1 md:grid-cols-2 gap-6">
       {/* Back */}
       <div className="md:col-span-2">
-         {/* Back */}
-      <Button variant="ghost" className="gap-2" onClick={() => navigate(-1)}>
-        <ArrowLeft className="h-4 w-4" />
-        Back
-      </Button>
+        {/* Back */}
+        <Button variant="ghost" className="gap-2" onClick={() => navigate(-1)}>
+          <ArrowLeft className="h-4 w-4" />
+          Back
+        </Button>
       </div>
 
       {/* Title */}
@@ -333,6 +340,7 @@ export const AddExperience = () => {
           {logoPreview && (
             <img
               src={logoPreview}
+              alt="Logo Preview"
               className="w-32 h-32 rounded-md border"
             />
           )}
@@ -351,8 +359,8 @@ export const AddExperience = () => {
       </Card>
 
       {/* Submit */}
-      <Button className="md:col-span-2" onClick={handleSubmit}>
-        Add Experience
+      <Button className="md:col-span-2" onClick={handleSubmit} disabled={loading}>
+        {loading ? "Adding..." : "Add Experience"}
       </Button>
     </div>
   )

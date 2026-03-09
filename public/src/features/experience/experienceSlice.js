@@ -28,10 +28,7 @@ const slice = createSlice({
       })
       .addCase(fetchExperiences.fulfilled, (state, action) => {
         state.loading = false;
-        // The APIs often return { success: true, blogs: [...] } 
-        // We will adapt this based on typical response shape
-        const key = Object.keys(action.payload).find(k => k !== 'success');
-        state.experiences = key ? action.payload[key] : action.payload;
+        state.experiences = action.payload.experiences || [];
       })
       .addCase(fetchExperiences.rejected, (state, action) => {
         state.loading = false;

@@ -20,7 +20,7 @@ const ViewExperienceDetails = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
 
-  const { experience, loading, error } = useSelector((state: RootState) => state.expriences)
+  const { experience, loading, error } = useSelector((state: RootState) => state.experiences)
 
   /* ===============================
      FETCH EXPERIENCE

@@ -18,7 +18,7 @@ experienceRouter.get("/", getExperiences);
 experienceRouter.get("/:id", getExperienceById);
 
 /* Update */
-experienceRouter.patch("/:id", updateExperience);
+experienceRouter.patch("/:id", upload.fields([{ name: "logo", maxCount: 1 }]), updateExperience);
 
 /* Delete */
 experienceRouter.delete("/:id", deleteExperience);

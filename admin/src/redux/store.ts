@@ -23,7 +23,7 @@ export const store = configureStore({
     books: bookReducer,
     products: productReducer,
     skills: skillReducer,
-    expriences: experienceReducer,
+    experiences: experienceReducer,
     categories: categoryReducer,
     certificates: certificateReducer,
     educations: educationReducer,

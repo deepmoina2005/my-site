@@ -17,6 +17,16 @@ import toast from "react-hot-toast";
 import axiosInstance from "@/utils/axiosInstance";
 import { fetchCategories } from "@/features/category/categorySlice";
 
+interface Category {
+  _id: string;
+  name: string;
+}
+
+interface Feature {
+  title: string;
+  description: string;
+}
+
 const AddService = () => {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
@@ -24,7 +34,17 @@ const AddService = () => {
   const { categories } = useSelector((state: RootState) => state.categories);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<{
+    title: string;
+    shortDescription: string;
+    fullDescription: string;
+    category: string;
+    status: string;
+    technologies: string[];
+    tags: string[];
+    features: Feature[];
+    links: { demo: string; github: string; documentation: string };
+  }>({
     title: "",
     shortDescription: "",
     fullDescription: "",
@@ -43,7 +63,6 @@ const AddService = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
 
   const [newTech, setNewTech] = useState("");
   const [newTag, setNewTag] = useState("");
@@ -53,9 +72,16 @@ const AddService = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (id) {
+    if (!id) return;
+
+    let isMounted = true;
+
+    const fetchServiceData = async () => {
       setLoading(true);
-      axiosInstance.get(`/services/${id}`).then(res => {
+      try {
+        const res = await axiosInstance.get(`/services/${id}`);
+        if (!isMounted) return;
+
         const data = res.data.entity || res.data;
         setFormData({
           title: data.title || "",
@@ -70,8 +96,17 @@ const AddService = () => {
         });
         if (data.image) setImagePreview(data.image);
         setLoading(false);
-      }).catch(() => setLoading(false));
-    }
+      } catch {
+        if (!isMounted) return;
+        setLoading(false);
+      }
+    };
+
+    fetchServiceData();
+
+    return () => {
+      isMounted = false;
+    };
   }, [id]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,38 +119,39 @@ const AddService = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitting(true);
+    setLoading(true);
     const data = new FormData();
 
     // Append fields
     Object.keys(formData).forEach(key => {
-      if (typeof formData[key] === "object") {
-        data.append(key, JSON.stringify(formData[key]));
+      const value = formData[key as keyof typeof formData];
+      if (typeof value === "object") {
+        data.append(key, JSON.stringify(value));
       } else {
-        data.append(key, formData[key]);
+        data.append(key, value as string);
       }
     });
 
     if (imageFile) data.append("image", imageFile);
 
     if (id) {
-      dispatch(updateService({ id, data })).then((res: any) => {
-        setSubmitting(false);
-        if (!res.error) {
+      dispatch(updateService({ id, data })).then((res) => {
+        setLoading(false);
+        if (res.type.endsWith("/fulfilled")) {
           toast.success("Service Updated");
           navigate("/services/all");
         } else {
-          toast.error(res.payload || "Update Failed");
+          toast.error((res.payload as { message?: string })?.message || "Update Failed");
         }
       });
     } else {
-      dispatch(addService(data)).then((res: any) => {
-        setSubmitting(false);
-        if (!res.error) {
+      dispatch(addService(data)).then((res) => {
+        setLoading(false);
+        if (res.type.endsWith("/fulfilled")) {
           toast.success("Service Created");
           navigate("/services/all");
         } else {
-          toast.error(res.payload || "Creation Failed");
+          toast.error((res.payload as { message?: string })?.message || "Creation Failed");
         }
       });
     }
@@ -130,7 +166,7 @@ const AddService = () => {
   };
 
   const removeFeature = (index: number) => {
-    const newFeatures = formData.features.filter((_: any, i: number) => i !== index);
+    const newFeatures = formData.features.filter((_: Feature, i: number) => i !== index);
     setFormData({ ...formData, features: newFeatures.length > 0 ? newFeatures : [{ title: "", description: "" }] });
   };
 
@@ -155,7 +191,7 @@ const AddService = () => {
   };
 
   if (loading) return (
-    <div className="flex items-center justify-center min-h-[400px]">
+    <div className="flex items-center justify-center min-h-100">
       <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
     </div>
   );
@@ -197,7 +233,7 @@ const AddService = () => {
               <SelectValue placeholder="Select Category" />
             </SelectTrigger>
             <SelectContent>
-              {categories.map((cat: any) => (
+              {categories.map((cat: Category) => (
                 <SelectItem key={cat._id} value={cat.name}>
                   {cat.name}
                 </SelectItem>
@@ -369,7 +405,7 @@ const AddService = () => {
             placeholder="Describe your service in detail..."
             value={formData.fullDescription}
             onChange={(e) => setFormData({ ...formData, fullDescription: e.target.value })}
-            className="min-h-[150px]"
+            className="min-h-37.5"
           />
         </CardContent>
       </Card>
@@ -383,7 +419,7 @@ const AddService = () => {
           </Button>
         </CardHeader>
         <CardContent className="space-y-4">
-          {formData.features.map((feature: any, index: number) => (
+          {formData.features.map((feature: Feature, index: number) => (
             <div key={index} className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start border p-4 rounded-xl">
               <div className="md:col-span-4">
                 <Input placeholder="Feature Title" value={feature.title} onChange={(e) => updateFeature(index, "title", e.target.value)} />
@@ -401,17 +437,13 @@ const AddService = () => {
         </CardContent>
       </Card>
 
-      {/* Submit Button */}
+     {/* Submit */}
       <Button
-        className="w-full md:col-span-2 h-14 text-lg font-bold"
+        className="w-full md:col-span-2"
         onClick={handleSubmit}
-        disabled={submitting}
+        disabled={loading}
       >
-        {submitting ? (
-          <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> {id ? "Updating..." : "Creating..."}</>
-        ) : (
-          id ? "Save Service" : "Create Service"
-        )}
+        {loading ? "Saving..." : "Save Service"}
       </Button>
     </div>
   );

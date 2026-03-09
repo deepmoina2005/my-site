@@ -54,7 +54,7 @@ const AllExperience = () => {
   const navigate = useNavigate()
 
   const { experiences, loading, error, success } = useSelector(
-    (state: RootState) => state.expriences
+    (state: RootState) => state.experiences
   )
 
   const [search, setSearch] = useState("")
@@ -214,13 +214,13 @@ const AllExperience = () => {
                       <TableCell className="text-muted-foreground">
                         {exp.isOngoing
                           ? `${new Date(
-                              exp.startDate
-                            ).toLocaleDateString()} - Present`
+                            exp.startDate
+                          ).toLocaleDateString()} - Present`
                           : `${new Date(
-                              exp.startDate
-                            ).toLocaleDateString()} - ${new Date(
-                              exp.endDate!
-                            ).toLocaleDateString()}`}
+                            exp.startDate
+                          ).toLocaleDateString()} - ${new Date(
+                            exp.endDate!
+                          ).toLocaleDateString()}`}
                       </TableCell>
 
                       {/* VISIBILITY */}

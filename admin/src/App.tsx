@@ -37,7 +37,8 @@ import AllCategories from "@/features/category/pages/AllCategories";
 import ViewNoteDetails from "@/features/notes/pages/ViewNoteDetails";
 import ViewBooksDetails from "@/features/book/pages/ViewBooksDetails";
 import ViewProductDetails from "@/features/product/pages/ViewProductDetails";
-import ViewExperienceDetails from "@/features/experience/pages/ViewExprienceDetails";
+import ViewExperienceDetails from "@/features/experience/pages/ViewExperienceDetails";
+import EditExperience from "@/features/experience/pages/EditExperience";
 
 function App() {
   return (
@@ -86,6 +87,7 @@ function App() {
             <Route path="experience/add" element={<AddExperience />} />
             <Route path="experience/all" element={<AllExperience />} />
             <Route path="experience/:id" element={<ViewExperienceDetails />} />
+            <Route path="experience/:id/edit" element={<EditExperience />} />
 
             <Route path="education/add" element={<AddEducation />} />
             <Route path="education/all" element={<AllEducations />} />
