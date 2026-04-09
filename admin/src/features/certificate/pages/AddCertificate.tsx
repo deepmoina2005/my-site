@@ -11,12 +11,24 @@ import { Badge } from "@/shared/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Plus, X, Upload, Image as ImageIcon, FileText } from "lucide-react";
 import toast from "react-hot-toast";
-import axiosInstance from "@/utils/axiosInstance";
+import axiosInstance from "@/shared/utils/axiosInstance";
 
 const months = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
+
+interface CertificateFormData {
+  title: string;
+  issuer: string;
+  issueMonth: string;
+  issueYear: string;
+  expirationMonth: string;
+  expirationYear: string;
+  credentialId: string;
+  link: string;
+  skills: string[];
+}
 
 const AddCertificate = () => {
   const { id } = useParams();
@@ -26,7 +38,7 @@ const AddCertificate = () => {
   const imageInputRef = useRef<HTMLInputElement>(null);
   const mediaInputRef = useRef<HTMLInputElement>(null);
 
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<CertificateFormData>({
     title: "",
     issuer: "",
     issueMonth: "",
@@ -49,7 +61,6 @@ const AddCertificate = () => {
   useEffect(() => {
     dispatch(getSkills());
     if (id) {
-      setLoading(true);
       axiosInstance.get(`/certificates/${id}`).then(res => {
         const data = res.data.entity || res.data;
         setFormData({
@@ -89,10 +100,11 @@ const AddCertificate = () => {
 
     // Append text fields
     Object.keys(formData).forEach(key => {
+      const typedKey = key as keyof CertificateFormData;
       if (key === "skills") {
-        data.append(key, JSON.stringify(formData[key]));
+        data.append(key, JSON.stringify(formData[typedKey]));
       } else {
-        data.append(key, formData[key]);
+        data.append(key, formData[typedKey] as string);
       }
     });
 
@@ -105,22 +117,18 @@ const AddCertificate = () => {
     });
 
     if (id) {
-      dispatch(updateCertificate({ id, data })).then((res: any) => {
-        if (!res.error) {
-          toast.success("Updated");
-          navigate("/certificates/all");
-        } else {
-          toast.error(res.payload || "Failed to update");
-        }
+      dispatch(updateCertificate({ id, data })).unwrap().then(() => {
+        toast.success("Updated");
+        navigate("/certificates/all");
+      }).catch((error) => {
+        toast.error(error || "Failed to update");
       });
     } else {
-      dispatch(addCertificate(data)).then((res: any) => {
-        if (!res.error) {
-          toast.success("Created");
-          navigate("/certificates/all");
-        } else {
-          toast.error(res.payload || "Failed to create");
-        }
+      dispatch(addCertificate(data)).unwrap().then(() => {
+        toast.success("Created");
+        navigate("/certificates/all");
+      }).catch((error) => {
+        toast.error(error || "Failed to create");
       });
     }
   };
@@ -160,7 +168,7 @@ const AddCertificate = () => {
                 <label className="text-sm font-semibold block">Certificate Image</label>
                 <div
                   onClick={() => imageInputRef.current?.click()}
-                  className="aspect-[4/3] border-2 border-dashed rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-slate-50 transition-colors overflow-hidden relative group"
+                  className="aspect-4/3 border-2 border-dashed rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-slate-50 transition-colors overflow-hidden relative group"
                 >
                   {imagePreview || existingImage ? (
                     <>
@@ -176,7 +184,7 @@ const AddCertificate = () => {
                     </>
                   )}
                 </div>
-                <input type="file" ref={imageInputRef} onChange={handleImageChange} className="hidden" accept="image/*" />
+                <input type="file" ref={imageInputRef} onChange={handleImageChange} className="hidden" accept="image/*" title="Upload certificate image" />
               </div>
 
               {/* Middle/Right Columns: Text Inputs */}
@@ -262,7 +270,7 @@ const AddCertificate = () => {
                 {existingMedia.map((url, i) => (
                   <div key={i} className="relative aspect-square rounded-lg overflow-hidden border bg-slate-50">
                     <img src={url} alt="Media" className="w-full h-full object-cover" />
-                    <button type="button" onClick={() => handleRemoveMedia(i, true)} className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 shadow-lg">
+                    <button type="button" onClick={() => handleRemoveMedia(i, true)} title="Remove media" className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 shadow-lg">
                       <X className="h-3 w-3" />
                     </button>
                   </div>
@@ -273,7 +281,7 @@ const AddCertificate = () => {
                       <FileText className="h-6 w-6 mb-1" />
                       <span className="truncate w-full">{file.name}</span>
                     </div>
-                    <button type="button" onClick={() => handleRemoveMedia(i, false)} className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 shadow-lg">
+                    <button type="button" onClick={() => handleRemoveMedia(i, false)} title="Remove media" className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 shadow-lg">
                       <X className="h-3 w-3" />
                     </button>
                   </div>
@@ -286,7 +294,7 @@ const AddCertificate = () => {
                   <span className="text-[10px] text-slate-400">Add Media</span>
                 </div>
               </div>
-              <input type="file" ref={mediaInputRef} onChange={handleMediaChange} className="hidden" multiple />
+              <input type="file" ref={mediaInputRef} onChange={handleMediaChange} className="hidden" multiple title="Upload media files" />
             </div>
 
             <Button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 h-12 text-lg">

@@ -11,7 +11,7 @@ import { Badge } from "@/shared/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Plus, X } from "lucide-react";
 import toast from "react-hot-toast";
-import axiosInstance from "@/utils/axiosInstance";
+import axiosInstance from "@/shared/utils/axiosInstance";
 
 const months = [
   "January", "February", "March", "April", "May", "June",

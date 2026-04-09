@@ -13,7 +13,6 @@ export const navLinks = [
         name: "More", 
         href: "#", 
         subLinks: [
-            { name: "Books", href: "/books" },
             { name: "Products", href: "/products" },
             { name: "Certificates", href: "/certificates" },
             { name: "Notes", href: "/notes" },

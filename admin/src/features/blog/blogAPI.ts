@@ -1,5 +1,5 @@
 
-import axiosInstance from "@/utils/axiosInstance";
+import axiosInstance from "@/shared/utils/axiosInstance";
 import type { BlogResponse } from "../../types/blog";
 
 /* ===============================

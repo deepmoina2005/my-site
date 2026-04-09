@@ -3,7 +3,6 @@ import adminReducer from "@/features/login/adminSlice";
 import blogsReducer from "@/features/blog/blogSlice";
 import projectsReducer from "@/features/project/projectSlice";
 import noteReducer from "@/features/notes/noteSlice";
-import bookReducer from "@/features/book/bookSlice";
 import productReducer from "@/features/product/productSlice";
 import skillReducer from "@/features/skill/skillSlice";
 import experienceReducer from "@/features/experience/experienceSlice";
@@ -20,7 +19,6 @@ export const store = configureStore({
     blogs: blogsReducer,
     projects: projectsReducer,
     notes: noteReducer,
-    books: bookReducer,
     products: productReducer,
     skills: skillReducer,
     experiences: experienceReducer,

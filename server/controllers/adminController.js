@@ -5,14 +5,10 @@ import Blog from "../models/blogModel.js";
 import Project from "../models/projectModel.js";
 import Skill from "../models/skillModel.js";
 import Product from "../models/productModel.js";
-import Book from "../models/bookModel.js";
 import Note from "../models/noteModel.js";
 import Service from "../models/serviceModel.js";
 import Certificate from "../models/certificateModel.js";
-import Education from "../models/educationModel.js";
-import Experience from "../models/experienceModel.js";
 import Contact from "../models/contactModel.js";
-import Category from "../models/categoryModel.js";
 
 /* ===============================
    CREATE INITIAL ADMIN (ONCE)
@@ -214,27 +210,19 @@ export const getDashboardStats = async (req, res) => {
       projectCount,
       skillCount,
       productCount,
-      bookCount,
       noteCount,
       serviceCount,
       certificateCount,
-      educationCount,
-      experienceCount,
       contactCount,
-      categoryCount
     ] = await Promise.all([
       Blog.countDocuments(),
       Project.countDocuments(),
       Skill.countDocuments(),
       Product.countDocuments(),
-      Book.countDocuments(),
       Note.countDocuments(),
       Service.countDocuments(),
       Certificate.countDocuments(),
-      Education.countDocuments(),
-      Experience.countDocuments(),
       Contact.countDocuments(),
-      Category.countDocuments()
     ]);
 
     res.status(200).json({
@@ -244,14 +232,10 @@ export const getDashboardStats = async (req, res) => {
         projects: projectCount,
         skills: skillCount,
         products: productCount,
-        books: bookCount,
         notes: noteCount,
         services: serviceCount,
         certificates: certificateCount,
-        educations: educationCount,
-        experiences: experienceCount,
         contacts: contactCount,
-        categories: categoryCount
       }
     });
   } catch (error) {

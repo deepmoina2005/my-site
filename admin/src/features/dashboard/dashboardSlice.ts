@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "@/utils/axiosInstance";
+import  { AxiosError } from "axios";
+import axiosInstance from "@/shared/utils/axiosInstance";
 
 export const fetchDashboardStats = createAsyncThunk(
   "dashboard/fetchStats",
@@ -7,9 +8,10 @@ export const fetchDashboardStats = createAsyncThunk(
     try {
       const response = await axiosInstance.get("/admin/stats");
       return response.data.stats;
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError;
       return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch dashboard stats"
+        (axiosError.response?.data as Record<string, unknown>)?.message || "Failed to fetch dashboard stats"
       );
     }
   }
@@ -21,14 +23,10 @@ interface DashboardState {
     projects: number;
     skills: number;
     products: number;
-    books: number;
     notes: number;
     services: number;
     certificates: number;
-    educations: number;
-    experiences: number;
     contacts: number;
-    categories: number;
   } | null;
   loading: boolean;
   error: string | null;

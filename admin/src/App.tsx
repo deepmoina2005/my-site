@@ -15,8 +15,6 @@ import EditProject from "@/features/project/pages/EditProject";
 import ProtectedRoute from "@/shared/components/ProtectedRoute";
 import AddNotes from "@/features/notes/pages/addNotes";
 import AllNotes from "@/features/notes/pages/allNotes";
-import AddBooks from "@/features/book/pages/AddBooks";
-import AllBooks from "@/features/book/pages/AllBooks";
 import AddProducts from "@/features/product/pages/AddProducts";
 import AllProducts from "@/features/product/pages/AllProducts";
 import AddSkill from "@/features/skill/pages/AddSkill";
@@ -35,7 +33,6 @@ import AllCertificates from "@/features/certificate/pages/AllCertificates";
 import AllContacts from "@/features/contact/pages/AllContacts";
 import AllCategories from "@/features/category/pages/AllCategories";
 import ViewNoteDetails from "@/features/notes/pages/ViewNoteDetails";
-import ViewBooksDetails from "@/features/book/pages/ViewBooksDetails";
 import ViewProductDetails from "@/features/product/pages/ViewProductDetails";
 import ViewExperienceDetails from "@/features/experience/pages/ViewExperienceDetails";
 import EditExperience from "@/features/experience/pages/EditExperience";
@@ -72,10 +69,6 @@ function App() {
             <Route path="notes/add" element={<AddNotes />} />
             <Route path="notes/all" element={<AllNotes />} />
             <Route path="notes/:id" element={<ViewNoteDetails />} />
-
-            <Route path="books/add" element={<AddBooks />} />
-            <Route path="books/all" element={<AllBooks />} />
-            <Route path="books/:id" element={<ViewBooksDetails />} />
 
             <Route path="products/add" element={<AddProducts />} />
             <Route path="products/all" element={<AllProducts />} />

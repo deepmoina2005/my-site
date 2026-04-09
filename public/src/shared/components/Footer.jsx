@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useThemeContext } from "@/context/ThemeContext";
 import { navLinks } from "@/data/navLinks";
 import { Github, Linkedin, Twitter, Facebook, Instagram, Youtube } from "lucide-react";
@@ -9,8 +8,8 @@ const SocialIcon = ({ href, icon: Icon, label }) => {
     return (
         <a href={href} target="_blank" rel="noopener noreferrer"
             className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-purple-100 dark:hover:bg-purple-900/30 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
-            aria-label={label}>
-            <Icon className="h-4 w-4" />
+            aria-label={label} title={label}>
+            {Icon && <Icon className="h-4 w-4" />}
         </a>
     );
 };
@@ -24,8 +23,9 @@ export default function Footer() {
     const siteLogoUrl = "";
     const social = {
         github: "https://github.com/deepmoina2005",
-        linkedin: "https://linkedin.com/in/deepmoina",
-        twitter: "https://twitter.com/deepmoina",
+        linkedin: "https://www.linkedin.com/in/deepmoina-boruah",
+        twitter: "https://twitter.com",
+        instagram: "https://www.instagram.com/deep_m_boruah",
     };
 
     return (
@@ -62,7 +62,7 @@ export default function Footer() {
 
                     {/* Navigation */}
                     <div>
-                        <h2 className="font-bold text-lg mb-6 uppercase tracking-widest text-slate-400 text-sm">Navigation</h2>
+                        <h2 className="font-bold text-lg mb-6 uppercase tracking-widest text-slate-400">Navigation</h2>
                         <ul className="grid grid-cols-2 gap-x-10 gap-y-3">
                             {navLinks.map((link, index) => (
                                 <li key={index}>
@@ -76,7 +76,7 @@ export default function Footer() {
 
                     {/* Contact */}
                     <div>
-                        <h2 className="font-bold text-lg mb-6 uppercase tracking-widest text-slate-400 text-sm">Get in touch</h2>
+                        <h2 className="font-bold text-lg mb-6 uppercase tracking-widest text-slate-400">Get in touch</h2>
                         <div className="space-y-3">
                             {contactEmail && <p className="text-slate-600 dark:text-slate-300 font-medium">{contactEmail}</p>}
                             {address && <p className="text-slate-600 dark:text-slate-300 font-medium">{address}</p>}

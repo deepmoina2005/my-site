@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "@/utils/axiosInstance";
+import axiosInstance from "@/shared/utils/axiosInstance";
 
 export const fetchEducations = createAsyncThunk("educations/fetchAll", async (_, { rejectWithValue }) => {
   try {

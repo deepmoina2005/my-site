@@ -1,5 +1,5 @@
 // src/redux/services/adminService.ts
-import axiosInstance from "@/utils/axiosInstance";
+import axiosInstance from "@/shared/utils/axiosInstance";
 import type {
     AdminLoginPayload,
     ChangePasswordPayload,

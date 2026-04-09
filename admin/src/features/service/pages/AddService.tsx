@@ -14,7 +14,7 @@ import {
   ArrowLeft, Loader2
 } from "lucide-react";
 import toast from "react-hot-toast";
-import axiosInstance from "@/utils/axiosInstance";
+import axiosInstance from "@/shared/utils/axiosInstance";
 import { fetchCategories } from "@/features/category/categorySlice";
 
 interface Category {

@@ -1,13 +1,10 @@
 import { Route, Routes } from "react-router-dom"
-import { useEffect } from "react"
-import { useDispatch } from "react-redux"
 import Home from "@/features/home/pages/Home"
 import About from "@/features/about/pages/About"
 import ProjectsPage from "@/features/project/pages/ProjectsPage"
 import ProjectDetail from "@/features/project/pages/ProjectDetail"
 import BlogPage from "@/features/blog/pages/BlogPage"
 import BlogDetail from "@/features/blog/pages/BlogDetail"
-import BooksPage from "@/features/book/pages/BooksPage"
 import ProductsPage from "@/features/product/pages/ProductsPage"
 import ServicesPage from "@/features/service/pages/ServicesPage"
 import ServiceDetail from "@/features/service/pages/ServiceDetail"
@@ -23,7 +20,6 @@ import LenisScroll from "@/shared/components/Lenis"
 import { Toaster } from "react-hot-toast"
 
 export default function App() {
-    const dispatch = useDispatch()
     return (
         <>
             <Toaster position="top-center" reverseOrder={false} />
@@ -36,7 +32,6 @@ export default function App() {
                 <Route path="/projects/:id" element={<ProjectDetail />} />
                 <Route path="/blog" element={<BlogPage />} />
                 <Route path="/blog/:slug" element={<BlogDetail />} />
-                <Route path="/books" element={<BooksPage />} />
                 <Route path="/products" element={<ProductsPage />} />
                 <Route path="/services" element={<ServicesPage />} />
                 <Route path="/services/:id" element={<ServiceDetail />} />

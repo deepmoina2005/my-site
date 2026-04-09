@@ -1,4 +1,4 @@
-import axiosInstance from "@/utils/axiosInstance";
+import axiosInstance from "@/shared/utils/axiosInstance";
 import type { NoteResponse } from "@/types/note";
 
 /* ===============================

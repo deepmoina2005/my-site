@@ -6,14 +6,10 @@ import {
   BookOpen,
   FolderKanban,
   FileText,
-  GraduationCap,
   StickyNote,
   Boxes,
   Award,
-  Briefcase,
   MessageSquare,
-  School,
-  Tags,
   LayoutGrid,
 } from "lucide-react"
 
@@ -32,14 +28,10 @@ const Cards = () => {
     { title: "Total Projects", value: stats?.projects || 0, icon: FolderKanban, color: "text-green-500" },
     { title: "Total Skills", value: stats?.skills || 0, icon: Boxes, color: "text-purple-500" },
     { title: "Total Products", value: stats?.products || 0, icon: BookOpen, color: "text-yellow-500" },
-    { title: "Total Books", value: stats?.books || 0, icon: GraduationCap, color: "text-red-500" },
     { title: "Total Notes", value: stats?.notes || 0, icon: StickyNote, color: "text-pink-500" },
     { title: "Total Services", value: stats?.services || 0, icon: LayoutGrid, color: "text-indigo-500" },
     { title: "Certificates", value: stats?.certificates || 0, icon: Award, color: "text-cyan-500" },
-    { title: "Experiences", value: stats?.experiences || 0, icon: Briefcase, color: "text-orange-500" },
-    { title: "Educations", value: stats?.educations || 0, icon: School, color: "text-emerald-500" },
     { title: "Contact Msgs", value: stats?.contacts || 0, icon: MessageSquare, color: "text-rose-500" },
-    { title: "Categories", value: stats?.categories || 0, icon: Tags, color: "text-violet-500" },
   ]
 
   if (loading && !stats) {

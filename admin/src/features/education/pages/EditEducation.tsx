@@ -11,7 +11,7 @@ import { Label } from "@/shared/components/ui/label";
 import { Badge } from "@/shared/components/ui/badge";
 import { X, Plus, ArrowLeft, Upload, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
-import axiosInstance from "@/utils/axiosInstance";
+import axiosInstance from "@/shared/utils/axiosInstance";
 
 const EditEducation = () => {
   const { id } = useParams();

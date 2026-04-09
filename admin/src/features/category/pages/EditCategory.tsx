@@ -8,7 +8,7 @@ import { Input } from "@/shared/components/ui/input";
 import { Textarea } from "@/shared/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import toast from "react-hot-toast";
-import axiosInstance from "@/utils/axiosInstance";
+import axiosInstance from "@/shared/utils/axiosInstance";
 
 const EditCategory = () => {
   const { id } = useParams();

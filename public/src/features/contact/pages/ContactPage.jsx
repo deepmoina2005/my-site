@@ -41,7 +41,7 @@ const ContactPage = () => {
             toast.success('Message sent! I will get back to you soon.');
             setFormData({ name: '', email: '', service: '', subject: '', message: '' });
         } catch (err) {
-            toast.error('Failed to send message. Please try again.');
+            toast.error('Failed to send message. Please try again.', err);
         } finally {
             setLoading(false);
         }
@@ -68,7 +68,7 @@ const ContactPage = () => {
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Email</p>
-                                        <p className="font-semibold text-slate-900 dark:text-white">hello@example.com</p>
+                                        <p className="font-semibold text-slate-900 dark:text-white">deepmoinaboruah.com</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4">
@@ -77,7 +77,7 @@ const ContactPage = () => {
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Phone</p>
-                                        <p className="font-semibold text-slate-900 dark:text-white">+1 (555) 000-0000</p>
+                                        <p className="font-semibold text-slate-900 dark:text-white">+91 7099481569</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4">
@@ -86,7 +86,7 @@ const ContactPage = () => {
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Location</p>
-                                        <p className="font-semibold text-slate-900 dark:text-white">New York, NY</p>
+                                        <p className="font-semibold text-slate-900 dark:text-white">Sivasagar, Assam, India</p>
                                     </div>
                                 </div>
                             </div>
@@ -99,11 +99,11 @@ const ContactPage = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label htmlFor="name" className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest px-1">Full Name</label>
-                                    <input required id="name" name="name" value={formData.name} onChange={handleChange} className="w-full h-14 px-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all font-medium" placeholder="John Doe" />
+                                    <input required id="name" name="name" value={formData.name} onChange={handleChange} className="w-full h-14 px-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all font-medium" placeholder="Enter your name" />
                                 </div>
                                 <div className="space-y-2">
                                     <label htmlFor="email" className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest px-1">Email Address</label>
-                                    <input required id="email" type="email" name="email" value={formData.email} onChange={handleChange} className="w-full h-14 px-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all font-medium" placeholder="john@example.com" />
+                                    <input required id="email" type="email" name="email" value={formData.email} onChange={handleChange} className="w-full h-14 px-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all font-medium" placeholder="Enter your email" />
                                 </div>
                             </div>
 

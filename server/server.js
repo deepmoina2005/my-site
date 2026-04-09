@@ -7,7 +7,6 @@ import connectCloudinary from "./configs/cloudinary.js";
 import blogRouter from "./routes/blogRoutes.js";
 import projectRouter from "./routes/projectRoutes.js";
 import notesRouter from "./routes/noteRoutes.js";
-import bookRouter from "./routes/bookRoute.js";
 import productRouter from "./routes/productRoutes.js";
 import skillRouter from "./routes/skillRoute.js";
 import experienceRouter from "./routes/experienceRoutes.js";
@@ -25,6 +24,7 @@ connectCloudinary();
 // CORS options
 const corsOptions = {
   origin: [
+    "http://localhost:5173", // public site (default Vite)
     "http://localhost:5175", // admin
     "https://my-site-ttlh.vercel.app", // admin
     "http://localhost:5174", // public site
@@ -43,7 +43,6 @@ app.use("/api/admin", adminRouter);
 app.use("/api/blogs", blogRouter);
 app.use("/api/projects", projectRouter);
 app.use("/api/notes", notesRouter);
-app.use("/api/books", bookRouter);
 app.use("/api/products", productRouter);
 app.use("/api/skills", skillRouter);
 app.use("/api/experiences", experienceRouter);

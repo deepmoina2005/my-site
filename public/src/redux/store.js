@@ -3,7 +3,6 @@ import blogReducer from '@/features/blog/blogSlice';
 import projectReducer from '@/features/project/projectSlice';
 import productReducer from '@/features/product/productSlice';
 import serviceReducer from '@/features/service/serviceSlice';
-import bookReducer from '@/features/book/bookSlice';
 import certificateReducer from '@/features/certificate/certificateSlice';
 import educationReducer from '@/features/education/educationSlice';
 import categoryReducer from '@/features/category/categorySlice';
@@ -17,7 +16,6 @@ export const store = configureStore({
     projects: projectReducer,
     products: productReducer,
     services: serviceReducer,
-    books: bookReducer,
     certificates: certificateReducer,
     educations: educationReducer,
     categories: categoryReducer,

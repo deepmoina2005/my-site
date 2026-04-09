@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Container from '@/shared/components/Container';
 import SectionTitle from '@/shared/components/SectionTitle';
 import EducationList from '@/features/education/components/EducationList';
 import CertificateList from '@/features/certificate/components/CertificateList';
 import SkillList from '@/features/skill/components/SkillList';
-
-import { fetchExperiences } from '@/features/experience/experienceSlice';
 import { fetchEducations } from '@/features/education/educationSlice';
 import { fetchCertificates } from '@/features/certificate/certificateSlice';
 import { fetchSkills } from '@/features/skill/skillSlice';
